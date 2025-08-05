@@ -89,9 +89,10 @@ export default function Quiz() {
       background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
       minHeight: "100vh",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
       justifyContent: "center",
-      padding: "20px", // Aumenta el padding
+      padding: "40px 20px", // Aumenta el padding
+      paddingTop: "60px",
       fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
     },
     card: {
