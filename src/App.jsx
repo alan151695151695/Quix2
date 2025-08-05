@@ -104,6 +104,8 @@ export default function Quiz() {
 
   const next = (key, value) => {
     setAnswers({ ...answers, [key]: value });
+    setStep(step + 1);
+    // Tracking - registrar la nueva pantalla
 
     // Múltiples intentos de scroll
     setTimeout(() => {
