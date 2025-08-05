@@ -88,9 +88,25 @@ export default function Quiz() {
   const next = (key, value) => {
     setAnswers({ ...answers, [key]: value });
     setStep(step + 1);
+
+    // Múltiples intentos de scroll
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "instant" });
-    }, 50);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 10);
+
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 100);
+
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 300);
   };
 
   const s = {
