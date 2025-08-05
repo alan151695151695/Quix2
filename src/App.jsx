@@ -290,11 +290,8 @@ export default function Quiz() {
       { emoji: "😊", text: "No" },
     ],
     7: [
-      { emoji: "🤯", text: "No recuerdo dónde dejé de leer" },
       { emoji: "😔", text: "Pierdo el tiempo volviendo a leer varias veces" },
       { emoji: "📈", text: "La lista de lecturas pendientes sigue creciendo" },
-      { emoji: "🎯", text: "No puedo crecer en mi carrera" },
-      { emoji: "🤔", text: "Abandono a medias los libros" },
       { emoji: "😕", text: "Leo, leo, leo, reviso y no entiendo" },
       { emoji: "😰", text: "Me siento ansioso por mucho contenido pendiente" },
     ],
@@ -807,8 +804,8 @@ export default function Quiz() {
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "12px",
-              margin: "6px 0",
+              padding: "10px",
+              margin: "4px 0",
               backgroundColor: selected.includes(option.text)
                 ? "#DBEAFE"
                 : "#EBF3FF",
