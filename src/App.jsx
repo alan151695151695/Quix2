@@ -4075,7 +4075,8 @@ export default function Quiz() {
                 transition: "all 0.3s ease",
                 boxShadow: "0 15px 35px -5px rgba(239, 68, 68, 0.4)",
                 marginBottom: "20px",
-                minWidth: "280px",
+                width: "100%",
+                maxWidth: "280px",
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = "translateY(-3px)";
