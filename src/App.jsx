@@ -1526,7 +1526,7 @@ export default function Quiz() {
         <div
           style={{
             position: "relative",
-            height: "280px",
+            height: "180px",
             marginBottom: "20px",
             background: "rgba(255, 255, 255, 0.9)",
             borderRadius: "16px",
@@ -1613,7 +1613,7 @@ export default function Quiz() {
               style={{
                 strokeDasharray: "400",
                 strokeDashoffset: "400",
-                animation: "drawCurve 3s ease-out forwards",
+                animation: "drawCurve 1.5s ease-out forwards",
               }}
             />
 
@@ -1626,13 +1626,13 @@ export default function Quiz() {
                 fill="#10B981"
                 style={{
                   opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 0.5s forwards",
+                  animation: "fadeInPoint 0.3s ease-out 0.3s forwards",
                 }}
               />
               <g
                 style={{
                   opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 0.8s forwards",
+                  animation: "bubbleIn 0.5s ease-out 0.5s forwards",
                   transformOrigin: "40px 201px",
                 }}
               >
@@ -1671,13 +1671,13 @@ export default function Quiz() {
                 fill="#F59E0B"
                 style={{
                   opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 1.5s forwards",
+                  animation: "fadeInPoint 0.3s ease-out 0.8s forwards",
                 }}
               />
               <g
                 style={{
                   opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 1.8s forwards",
+                  animation: "bubbleIn 0.5s ease-out 1.0s forwards",
                   transformOrigin: "160px 106px",
                 }}
               >
@@ -1716,13 +1716,13 @@ export default function Quiz() {
                 fill="#3B82F6"
                 style={{
                   opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 2.5s forwards",
+                  animation: "fadeInPoint 0.3s ease-out 1.3s forwards",
                 }}
               />
               <g
                 style={{
                   opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 2.8s forwards",
+                  animation: "bubbleIn 0.5s ease-out 1.5s forwards",
                   transformOrigin: "280px 46px",
                 }}
               >
