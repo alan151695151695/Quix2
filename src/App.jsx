@@ -96,7 +96,7 @@ export default function Quiz() {
     },
     card: {
       backgroundColor: "rgba(255, 255, 255, 0.95)",
-      backdropFilter: "blur(20px)",
+      backdropFilter: window.innerWidth <= 768 ? "blur(5px)" : "blur(20px)", // Menos blur en móvil
       borderRadius: "20px",
       padding: "40px",
       width: "min(800px, 90vw)",
