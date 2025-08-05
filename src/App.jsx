@@ -10,6 +10,25 @@ export default function Quiz() {
   const [email, setEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Tracking simple
+  const TRACKING_URL =
+    "https://script.google.com/macros/s/AKfycbw-WKn2-x8QFSMyHo8MsYnR4aEGee8UtLFfwQchXXDkJF9XmgkTktNcLDYWNYhhXE8IbQ/exec";
+  const userId = `user_${Date.now()}_${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
+  const trackProgress = async (screenNumber) => {
+    try {
+      fetch(TRACKING_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userId, screen: screenNumber }),
+      });
+      console.log(`Pantalla ${screenNumber} enviada`);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const staticData = useMemo(
     () => ({
       genders: [
@@ -106,6 +125,8 @@ export default function Quiz() {
     setAnswers({ ...answers, [key]: value });
     setStep(step + 1);
     // Tracking - registrar la nueva pantalla
+    // Tracking - registrar la nueva pantalla
+    trackProgress(step + 1);
 
     // Múltiples intentos de scroll
     setTimeout(() => {
