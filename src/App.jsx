@@ -13,6 +13,7 @@ export default function Quiz() {
 
   // Tracking simple
   const trackProgress = async (screenNumber) => {
+    console.log(`INTENTANDO enviar pantalla ${screenNumber}`); // ← AGREGA ESTA LÍNEA
     try {
       const iframe = document.createElement("iframe");
       iframe.style.display = "none";
