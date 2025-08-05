@@ -50,23 +50,6 @@ export default function Quiz() {
   }, [step]);
 
   useEffect(() => {
-    // Múltiples intentos para asegurar que funcione
-    window.scrollTo({ top: 0, behavior: "instant" });
-
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }, 10);
-
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }, 100);
-
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }, 300);
-  }, [step]);
-
-  useEffect(() => {
     if (timeLeft !== null && timeLeft > 0) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => (prev > 0 ? prev - 1 : 300));
@@ -105,6 +88,9 @@ export default function Quiz() {
   const next = (key, value) => {
     setAnswers({ ...answers, [key]: value });
     setStep(step + 1);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, 50);
   };
 
   const s = {
