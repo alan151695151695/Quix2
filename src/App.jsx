@@ -2232,7 +2232,15 @@ export default function Quiz() {
       </div>
     ),
     15: (
-      <div>
+      <div
+        className="final-screen"
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+          overflow: "hidden",
+          boxSizing: "border-box",
+        }}
+      >
         <h2
           style={{
             fontSize: "clamp(20px, 5vw, 28px)",
