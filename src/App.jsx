@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+// Agrega esto cerca de donde están tus otros useState
 
 export default function Quiz() {
   const [step, setStep] = useState(1);
@@ -41,6 +42,15 @@ export default function Quiz() {
     if (step === 15 && timeLeft === null) {
       setTimeLeft(300); // Inicia el contador solo cuando llega a la pantalla 15
     }
+  }, [step]);
+  useEffect(() => {
+    if (step === 15 && timeLeft === null) {
+      setTimeLeft(300); // Inicia el contador solo cuando llega a la pantalla 15
+    }
+  }, [step]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, [step]);
 
   useEffect(() => {
