@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 // Agrega esto cerca de donde están tus otros useState
 
 export default function Quiz() {
+  console.log("Quiz component loaded successfully");
   const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [answers, setAnswers] = useState({});
@@ -20,7 +21,7 @@ export default function Quiz() {
     try {
       const iframe = document.createElement("iframe");
       iframe.style.display = "none";
-      iframe.src = `https://docs.google.com/forms/d/e/1FAIpQLSeWRxr01-zTjhxpQ2eKQ0Sovz5W1cmgqJt-qI4Kb3TGDnifVg/formResponse?entry.1544353777=${userId}&entry.110111=${screenNumber}&submit=Submit`;
+      iframe.src = `https://docs.google.com/forms/d/1K8X9wLYN1qQyy4-a4zvlEhUgS9B7m2mFzBKaGqrA5nY/formResponse?entry.1918518787=${userId}&entry.413958521=${screenNumber}&submit=Submit`;
 
       document.body.appendChild(iframe);
       console.log(`Pantalla ${screenNumber} enviada a Google Forms`);
