@@ -78,6 +78,23 @@ export default function Quiz() {
       return () => clearInterval(timer);
     }
   }, [step]);
+  useEffect(() => {
+    // Múltiples métodos para asegurar que funcione
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // Scroll inmediato
+    scrollToTop();
+
+    // Scroll con delays
+    setTimeout(scrollToTop, 10);
+    setTimeout(scrollToTop, 50);
+    setTimeout(scrollToTop, 100);
+    setTimeout(scrollToTop, 200);
+  }, [step]);
 
   const handleMultiple = (value) => {
     setSelected((prev) =>
