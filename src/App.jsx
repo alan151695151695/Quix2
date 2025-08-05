@@ -10,6 +10,9 @@ export default function Quiz() {
   const [email, setEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const userId = `user_${Date.now()}_${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
 
   // Tracking simple
   const trackProgress = async (screenNumber) => {
