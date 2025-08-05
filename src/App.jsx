@@ -12,19 +12,20 @@ export default function Quiz() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Tracking simple
-  const TRACKING_URL =
-    "https://script.google.com/macros/s/AKfycbw4X8OKfX3prw_J8XAO51LiLiKFzxcoxqouDsq4M1Jls2kI2dygkWBgyttYmmrs0j7eBw/exec";
-  const userId = `user_${Date.now()}_${Math.random()
-    .toString(36)
-    .substr(2, 9)}`;
   const trackProgress = async (screenNumber) => {
     try {
-      fetch(TRACKING_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: userId, screen: screenNumber }),
-      });
-      console.log(`Pantalla ${screenNumber} enviada`);
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = `https://docs.google.com/forms/d/e/1FAIpQLSeWRxr01-zTjhxpQ2eKQ0Sovz5W1cmgqJt-qI4Kb3TGDnifVg/formResponse?entry.1544353777=${userId}&entry.110111=${screenNumber}&submit=Submit`;
+
+      document.body.appendChild(iframe);
+      console.log(`Pantalla ${screenNumber} enviada a Google Forms`);
+
+      setTimeout(() => {
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
+      }, 2000);
     } catch (error) {
       console.error("Error:", error);
     }
