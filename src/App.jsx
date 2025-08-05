@@ -85,6 +85,21 @@ export default function Quiz() {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     };
+    // Tracking
+const TRACKING_URL = 'https://script.google.com/macros/s/AKfycbw-WKn2-x8QFSMyHo8MsYnR4aEGee8UtLFfwQchXXDkJF9XmgkTktNcLDYWNYhhXE8IbQ/exec';
+const userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+const trackProgress = async (screenNumber) => {
+  try {
+    await fetch(TRACKING_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userId, screen: screenNumber })
+    });
+    console.log(`Pantalla ${screenNumber} registrada`);
+  } catch (error) {
+    console.error('Error tracking:', error);
+  }
+};
 
     // Scroll inmediato
     scrollToTop();
@@ -105,6 +120,8 @@ export default function Quiz() {
   const next = (key, value) => {
     setAnswers({ ...answers, [key]: value });
     setStep(step + 1);
+     // Tracking - registrar la nueva pantalla
+  trackProgress(step + 1);
 
     // Múltiples intentos de scroll
     setTimeout(() => {
