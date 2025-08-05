@@ -2237,8 +2237,9 @@ export default function Quiz() {
         style={{
           width: "100%",
           maxWidth: "100%",
-          overflow: "hidden",
+          overflow: "visible",
           boxSizing: "border-box",
+          minHeight: "auto",
         }}
       >
         <h2

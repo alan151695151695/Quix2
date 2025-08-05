@@ -92,3 +92,10 @@ final-screen {
     box-sizing: border-box !important;
   }
 }
+@media (max-width: 480px) {
+  .final-screen {
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+}
