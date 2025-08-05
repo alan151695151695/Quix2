@@ -38,8 +38,9 @@ html {
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh; /* Cambia de height a min-height */
   width: 100vw;
+  overflow-y: auto; /* Permite scroll si es necesario */
 }
 
 h1 {
