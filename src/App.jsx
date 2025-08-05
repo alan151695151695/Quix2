@@ -1154,11 +1154,6 @@ export default function Quiz() {
             color: "linear-gradient(135deg, #F59E0B, #D97706)",
           },
           {
-            emoji: "🏆",
-            text: "Pasar una prueba o competición",
-            color: "linear-gradient(135deg, #10B981, #059669)",
-          },
-          {
             emoji: "📊",
             text: "Mejorar mi desempeño laboral",
             color: "linear-gradient(135deg, #3B82F6, #1D4ED8)",
@@ -1311,7 +1306,7 @@ export default function Quiz() {
           style={{
             textAlign: "center",
             color: "#6B7280",
-            marginBottom: "24px",
+            marginBottom: "16px",
             fontSize: "clamp(12px, 3vw, 14px)",
             fontWeight: "500",
           }}
@@ -1331,11 +1326,6 @@ export default function Quiz() {
             color: "linear-gradient(135deg, #F59E0B, #D97706)",
           },
           {
-            emoji: "🏆",
-            text: "Pasar una prueba o competición",
-            color: "linear-gradient(135deg, #10B981, #059669)",
-          },
-          {
             emoji: "📊",
             text: "Mejorar mi desempeño laboral",
             color: "linear-gradient(135deg, #3B82F6, #1D4ED8)",
@@ -1352,8 +1342,8 @@ export default function Quiz() {
             style={{
               display: "flex",
               alignItems: "center",
-              padding: "16px 20px",
-              margin: "10px 0",
+              padding: "12x 16px",
+              margin: "6px 0",
               backgroundColor: selected.includes(option.text)
                 ? "rgba(79, 70, 229, 0.1)"
                 : "rgba(255, 255, 255, 0.8)",
