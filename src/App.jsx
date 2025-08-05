@@ -3529,8 +3529,10 @@ export default function Quiz() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "20px",
+              width: "100%",
+              maxWidth: "100%",
             }}
           >
             {/* Testimonio 1 */}
