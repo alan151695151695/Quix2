@@ -1526,11 +1526,11 @@ export default function Quiz() {
         <div
           style={{
             position: "relative",
-            height: "180px",
+            height: "120px",
             marginBottom: "20px",
             background: "rgba(255, 255, 255, 0.9)",
             borderRadius: "16px",
-            padding: "20px",
+            padding: "10px",
             backdropFilter: "blur(10px)",
             border: "1px solid rgba(79, 70, 229, 0.1)",
           }}
@@ -1538,7 +1538,7 @@ export default function Quiz() {
           <svg
             width="100%"
             height="100%"
-            viewBox="0 0 320 240"
+            viewBox="0 0 320 150"
             style={{ overflow: "visible" }}
           >
             <defs>
