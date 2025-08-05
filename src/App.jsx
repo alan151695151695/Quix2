@@ -13,7 +13,7 @@ export default function Quiz() {
 
   // Tracking simple
   const TRACKING_URL =
-    "https://script.google.com/macros/s/AKfycbw-WKn2-x8QFSMyHo8MsYnR4aEGee8UtLFfwQchXXDkJF9XmgkTktNcLDYWNYhhXE8IbQ/exec";
+    "https://script.google.com/macros/s/AKfycbzcdDNzf2AQtu_F8zca0fgNLdwtQYU23kTNPikKHy8TpfLVT9wEmB79fEqQ8u0z20_u/exec";
   const userId = `user_${Date.now()}_${Math.random()
     .toString(36)
     .substr(2, 9)}`;
