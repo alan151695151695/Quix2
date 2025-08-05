@@ -2054,7 +2054,7 @@ export default function Quiz() {
             fontSize: "clamp(20px, 5vw, 28px)",
             fontWeight: "800",
             textAlign: "center",
-            marginBottom: "32px",
+            marginBottom: "16px",
             color: "#1F2937",
             lineHeight: "1.2",
           }}
@@ -2066,19 +2066,19 @@ export default function Quiz() {
           style={{
             display: "flex",
             justifyContent: "center",
-            marginBottom: "24px",
+            marginBottom: "12px",
           }}
         >
           <div
             style={{
-              width: "80px",
-              height: "80px",
+              width: "60px",
+              height: "60px",
               background: "linear-gradient(135deg, #D2691E, #CD853F, #A0522D)",
               borderRadius: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "40px",
+              fontSize: "30px",
               boxShadow: "0 10px 25px -5px rgba(210, 105, 30, 0.4)",
               transform: "rotateX(15deg) rotateY(-15deg)",
               border: "3px solid rgba(160, 82, 45, 0.3)",
@@ -2091,7 +2091,7 @@ export default function Quiz() {
         <div
           style={{
             textAlign: "center",
-            marginBottom: "24px",
+            marginBottom: "12px",
             lineHeight: "1.5",
           }}
         >
@@ -2166,7 +2166,7 @@ export default function Quiz() {
           onKeyPress={(e) => e.key === "Enter" && email.trim() && setStep(15)}
           style={{
             ...s.input,
-            marginBottom: "16px",
+            marginBottom: "8px",
           }}
         />
 
@@ -2177,7 +2177,7 @@ export default function Quiz() {
             border: "1px solid rgba(79, 70, 229, 0.2)",
             borderRadius: "12px",
             padding: "16px",
-            marginBottom: "20px",
+            marginBottom: "12px",
             backdropFilter: "blur(10px)",
             textAlign: "center",
           }}
@@ -3472,7 +3472,7 @@ export default function Quiz() {
                 fontWeight: "600",
               }}
             >
-              MAESTRO
+              OXXO
             </div>
             <div
               style={{
@@ -4194,7 +4194,7 @@ export default function Quiz() {
                   fontWeight: "600",
                 }}
               >
-                MAESTRO
+                OXXO
               </div>
               <div
                 style={{
