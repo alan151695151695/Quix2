@@ -50,7 +50,10 @@ export default function Quiz() {
   }, [step]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, 100);
   }, [step]);
 
   useEffect(() => {
