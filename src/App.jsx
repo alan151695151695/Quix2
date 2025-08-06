@@ -1485,10 +1485,11 @@ export default function Quiz() {
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           padding: "16px",
           paddingTop: "20px",
-          paddingBottom: "24px",
+          paddingBottom: "32px",
+          boxSizing: "border-box",
         }}
       >
         {/* Título */}
@@ -1516,7 +1517,14 @@ export default function Quiz() {
         </div>
 
         {/* Contenido principal */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "0",
+          }}
+        >
           {/* Card de puntuación */}
           <div
             style={{
@@ -1572,7 +1580,7 @@ export default function Quiz() {
           <div
             style={{
               position: "relative",
-              height: "clamp(100px, 25vh, 140px)",
+              height: "clamp(100px, 20vh, 120px)",
               marginBottom: "12px",
               background: "rgba(255, 255, 255, 0.9)",
               borderRadius: "12px",
@@ -1820,46 +1828,46 @@ export default function Quiz() {
               fontSize: "clamp(11px, 2.8vw, 13px)",
               color: "#6B7280",
               textAlign: "center",
-              marginBottom: "16px",
+              marginBottom: "20px",
               fontWeight: "500",
               lineHeight: "1.2",
             }}
           >
             Promedio: Por debajo del promedio - Lectura básica
           </p>
-        </div>
 
-        {/* Botón al final */}
-        <div style={{ marginTop: "auto" }}>
-          <button
-            onClick={() => setStep(12)}
-            style={{
-              ...s.button,
-              fontSize: "clamp(14px, 3.8vw, 16px)",
-              fontWeight: "600",
-              width: "100%",
-              padding: "14px 24px",
-              borderRadius: "12px",
-              border: "none",
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              color: "white",
-              cursor: "pointer",
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              boxShadow: "0 8px 20px -5px rgba(102, 126, 234, 0.4)",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-1px)";
-              e.target.style.boxShadow =
-                "0 12px 25px -5px rgba(102, 126, 234, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow =
-                "0 8px 20px -5px rgba(102, 126, 234, 0.4)";
-            }}
-          >
-            Continuar
-          </button>
+          {/* Botón integrado en el contenido */}
+          <div style={{ marginTop: "auto", paddingTop: "16px" }}>
+            <button
+              onClick={() => setStep(12)}
+              style={{
+                ...s.button,
+                fontSize: "clamp(14px, 3.8vw, 16px)",
+                fontWeight: "600",
+                width: "100%",
+                padding: "14px 24px",
+                borderRadius: "12px",
+                border: "none",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                color: "white",
+                cursor: "pointer",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                boxShadow: "0 8px 20px -5px rgba(102, 126, 234, 0.4)",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-1px)";
+                e.target.style.boxShadow =
+                  "0 12px 25px -5px rgba(102, 126, 234, 0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow =
+                  "0 8px 20px -5px rgba(102, 126, 234, 0.4)";
+              }}
+            >
+              Continuar
+            </button>
+          </div>
         </div>
 
         <style>
