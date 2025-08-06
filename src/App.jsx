@@ -1480,373 +1480,387 @@ export default function Quiz() {
       </div>
     ),
     11: (
-      <div>
-        <h2
-          style={{
-            fontSize: "clamp(20px, 5vw, 28px)",
-            fontWeight: "800",
-            textAlign: "center",
-            marginBottom: "20px",
-            color: "#1F2937",
-            lineHeight: "1.2",
-          }}
-        >
-          <span
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "16px",
+          paddingTop: "20px",
+          paddingBottom: "24px",
+        }}
+      >
+        {/* Título */}
+        <div style={{ marginBottom: "16px" }}>
+          <h2
             style={{
-              background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              fontSize: "clamp(18px, 4.5vw, 24px)",
+              fontWeight: "800",
+              textAlign: "center",
+              margin: "0 0 16px 0",
+              color: "#1F2937",
+              lineHeight: "1.2",
             }}
           >
-            {name}
-          </span>
-        </h2>
-
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
-            border: "1px solid rgba(79, 70, 229, 0.2)",
-            borderRadius: "16px",
-            padding: "20px",
-            marginBottom: "24px",
-            backdropFilter: "blur(10px)",
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "clamp(14px, 4vw, 16px)",
-              color: "#374151",
-              marginBottom: "8px",
-              fontWeight: "500",
-              lineHeight: "1.4",
-            }}
-          >
-            En base a tus respuestas,{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #EC4899, #F59E0B)",
+                background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                fontWeight: "700",
               }}
             >
-              tu puntuación es de {Math.floor(Math.random() * 7) + 22}
+              {name}
             </span>
-          </p>
-          <p
+          </h2>
+        </div>
+
+        {/* Contenido principal */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          {/* Card de puntuación */}
+          <div
             style={{
-              fontSize: "clamp(13px, 3.5vw, 15px)",
-              color: "#6B7280",
-              margin: 0,
-              fontWeight: "500",
-              lineHeight: "1.4",
+              background:
+                "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
+              border: "1px solid rgba(79, 70, 229, 0.2)",
+              borderRadius: "12px",
+              padding: "16px",
+              marginBottom: "16px",
+              backdropFilter: "blur(10px)",
+              textAlign: "center",
             }}
           >
-            <span style={{ fontWeight: "600", color: "#EC4899" }}>
-              sobre 100 puntos
-            </span>
-            , necesitas y estás listo para leer más rápido, comprender mejor,
-            memorizar más y eliminar el estrés mientras lees, empezar de hoy.
+            <p
+              style={{
+                fontSize: "clamp(13px, 3.5vw, 15px)",
+                color: "#374151",
+                marginBottom: "6px",
+                fontWeight: "500",
+                lineHeight: "1.3",
+              }}
+            >
+              En base a tus respuestas,{" "}
+              <span
+                style={{
+                  background: "linear-gradient(135deg, #EC4899, #F59E0B)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontWeight: "700",
+                }}
+              >
+                tu puntuación es de {Math.floor(Math.random() * 7) + 22}
+              </span>
+            </p>
+            <p
+              style={{
+                fontSize: "clamp(12px, 3vw, 14px)",
+                color: "#6B7280",
+                margin: 0,
+                fontWeight: "500",
+                lineHeight: "1.3",
+              }}
+            >
+              <span style={{ fontWeight: "600", color: "#EC4899" }}>
+                sobre 100 puntos
+              </span>
+              , necesitas y estás listo para leer más rápido, comprender mejor,
+              memorizar más y eliminar el estrés mientras lees.
+            </p>
+          </div>
+
+          {/* Gráfico optimizado */}
+          <div
+            style={{
+              position: "relative",
+              height: "clamp(100px, 25vh, 140px)",
+              marginBottom: "12px",
+              background: "rgba(255, 255, 255, 0.9)",
+              borderRadius: "12px",
+              padding: "8px",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(79, 70, 229, 0.1)",
+            }}
+          >
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 320 120"
+              style={{ overflow: "visible" }}
+            >
+              <defs>
+                <linearGradient
+                  id="curveGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop
+                    offset="0%"
+                    style={{ stopColor: "#10B981", stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset="50%"
+                    style={{ stopColor: "#F59E0B", stopOpacity: 1 }}
+                  />
+                  <stop
+                    offset="100%"
+                    style={{ stopColor: "#3B82F6", stopOpacity: 1 }}
+                  />
+                </linearGradient>
+              </defs>
+
+              {/* Líneas de referencia más sutiles */}
+              <line
+                x1="40"
+                y1="20"
+                x2="40"
+                y2="100"
+                stroke="rgba(107, 114, 128, 0.15)"
+                strokeWidth="1"
+                strokeDasharray="2,2"
+              />
+              <line
+                x1="160"
+                y1="20"
+                x2="160"
+                y2="100"
+                stroke="rgba(107, 114, 128, 0.15)"
+                strokeWidth="1"
+                strokeDasharray="2,2"
+              />
+              <line
+                x1="280"
+                y1="20"
+                x2="280"
+                y2="100"
+                stroke="rgba(107, 114, 128, 0.15)"
+                strokeWidth="1"
+                strokeDasharray="2,2"
+              />
+
+              {/* Línea base */}
+              <line
+                x1="30"
+                y1="100"
+                x2="290"
+                y2="100"
+                stroke="rgba(107, 114, 128, 0.2)"
+                strokeWidth="1"
+              />
+
+              {/* Curva principal */}
+              <path
+                d="M 40 85 Q 120 70, 160 50 T 280 25"
+                fill="none"
+                stroke="url(#curveGradient)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                style={{
+                  strokeDasharray: "300",
+                  strokeDashoffset: "300",
+                  animation: "drawCurve 1.2s ease-out forwards",
+                }}
+              />
+
+              {/* Punto "Tú hoy" */}
+              <g>
+                <circle
+                  cx="40"
+                  cy="85"
+                  r="5"
+                  fill="#10B981"
+                  style={{
+                    opacity: 0,
+                    animation: "fadeInPoint 0.3s ease-out 0.3s forwards",
+                  }}
+                />
+                <g
+                  style={{
+                    opacity: 0,
+                    animation: "bubbleIn 0.4s ease-out 0.5s forwards",
+                  }}
+                >
+                  <rect
+                    x="15"
+                    y="65"
+                    width="50"
+                    height="18"
+                    rx="9"
+                    fill="#10B981"
+                  />
+                  <text
+                    x="40"
+                    y="76"
+                    textAnchor="middle"
+                    fill="white"
+                    fontSize="9"
+                    fontWeight="600"
+                  >
+                    Tú hoy
+                  </text>
+                </g>
+              </g>
+
+              {/* Punto "Tú en 7 días" */}
+              <g>
+                <circle
+                  cx="160"
+                  cy="50"
+                  r="5"
+                  fill="#F59E0B"
+                  style={{
+                    opacity: 0,
+                    animation: "fadeInPoint 0.3s ease-out 0.7s forwards",
+                  }}
+                />
+                <g
+                  style={{
+                    opacity: 0,
+                    animation: "bubbleIn 0.4s ease-out 0.9s forwards",
+                  }}
+                >
+                  <rect
+                    x="125"
+                    y="30"
+                    width="70"
+                    height="18"
+                    rx="9"
+                    fill="#F59E0B"
+                  />
+                  <text
+                    x="160"
+                    y="41"
+                    textAnchor="middle"
+                    fill="white"
+                    fontSize="9"
+                    fontWeight="600"
+                  >
+                    Tú en 7 días
+                  </text>
+                </g>
+              </g>
+
+              {/* Punto "Tú en hasta 14 días" */}
+              <g>
+                <circle
+                  cx="280"
+                  cy="25"
+                  r="5"
+                  fill="#3B82F6"
+                  style={{
+                    opacity: 0,
+                    animation: "fadeInPoint 0.3s ease-out 1.1s forwards",
+                  }}
+                />
+                <g
+                  style={{
+                    opacity: 0,
+                    animation: "bubbleIn 0.4s ease-out 1.3s forwards",
+                  }}
+                >
+                  <rect
+                    x="220"
+                    y="5"
+                    width="120"
+                    height="18"
+                    rx="9"
+                    fill="#3B82F6"
+                  />
+                  <text
+                    x="280"
+                    y="16"
+                    textAnchor="middle"
+                    fill="white"
+                    fontSize="9"
+                    fontWeight="600"
+                  >
+                    Tú en hasta 14 días
+                  </text>
+                </g>
+              </g>
+
+              {/* Etiquetas del eje X */}
+              <text
+                x="40"
+                y="115"
+                textAnchor="middle"
+                fill="#6B7280"
+                fontSize="10"
+                fontWeight="500"
+              >
+                Poco
+              </text>
+              <text
+                x="160"
+                y="115"
+                textAnchor="middle"
+                fill="#6B7280"
+                fontSize="10"
+                fontWeight="500"
+              >
+                Medio
+              </text>
+              <text
+                x="280"
+                y="115"
+                textAnchor="middle"
+                fill="#6B7280"
+                fontSize="10"
+                fontWeight="500"
+              >
+                Mucho
+              </text>
+            </svg>
+          </div>
+
+          {/* Texto de promedio */}
+          <p
+            style={{
+              fontSize: "clamp(11px, 2.8vw, 13px)",
+              color: "#6B7280",
+              textAlign: "center",
+              marginBottom: "16px",
+              fontWeight: "500",
+              lineHeight: "1.2",
+            }}
+          >
+            Promedio: Por debajo del promedio - Lectura básica
           </p>
         </div>
 
-        <div
-          style={{
-            position: "relative",
-            height: "120px",
-            marginBottom: "20px",
-            background: "rgba(255, 255, 255, 0.9)",
-            borderRadius: "16px",
-            padding: "10px",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(79, 70, 229, 0.1)",
-          }}
-        >
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 320 150"
-            style={{ overflow: "visible" }}
+        {/* Botón al final */}
+        <div style={{ marginTop: "auto" }}>
+          <button
+            onClick={() => setStep(12)}
+            style={{
+              ...s.button,
+              fontSize: "clamp(14px, 3.8vw, 16px)",
+              fontWeight: "600",
+              width: "100%",
+              padding: "14px 24px",
+              borderRadius: "12px",
+              border: "none",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              color: "white",
+              cursor: "pointer",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              boxShadow: "0 8px 20px -5px rgba(102, 126, 234, 0.4)",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "translateY(-1px)";
+              e.target.style.boxShadow =
+                "0 12px 25px -5px rgba(102, 126, 234, 0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow =
+                "0 8px 20px -5px rgba(102, 126, 234, 0.4)";
+            }}
           >
-            <defs>
-              <linearGradient
-                id="curveGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop
-                  offset="0%"
-                  style={{ stopColor: "#10B981", stopOpacity: 1 }}
-                />
-                <stop
-                  offset="50%"
-                  style={{ stopColor: "#F59E0B", stopOpacity: 1 }}
-                />
-                <stop
-                  offset="100%"
-                  style={{ stopColor: "#3B82F6", stopOpacity: 1 }}
-                />
-              </linearGradient>
-            </defs>
-
-            {/* Líneas suaves del eje X */}
-            <line
-              x1="40"
-              y1="30"
-              x2="40"
-              y2="215"
-              stroke="rgba(107, 114, 128, 0.2)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-            <line
-              x1="160"
-              y1="30"
-              x2="160"
-              y2="215"
-              stroke="rgba(107, 114, 128, 0.2)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-            <line
-              x1="280"
-              y1="30"
-              x2="280"
-              y2="215"
-              stroke="rgba(107, 114, 128, 0.2)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-
-            {/* Línea base */}
-            <line
-              x1="30"
-              y1="215"
-              x2="290"
-              y2="215"
-              stroke="rgba(107, 114, 128, 0.3)"
-              strokeWidth="1"
-            />
-
-            {/* Curva suave en S */}
-            <path
-              d="M 40 180 Q 120 160, 160 120 T 280 60"
-              fill="none"
-              stroke="url(#curveGradient)"
-              strokeWidth="4"
-              strokeLinecap="round"
-              style={{
-                strokeDasharray: "400",
-                strokeDashoffset: "400",
-                animation: "drawCurve 1.5s ease-out forwards",
-              }}
-            />
-
-            {/* Punto y burbuja "Tú hoy" - aparece cuando la línea llega */}
-            <g>
-              <circle
-                cx="40"
-                cy="180"
-                r="8"
-                fill="#10B981"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 0.3s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 0.5s forwards",
-                  transformOrigin: "40px 201px",
-                }}
-              >
-                <rect
-                  x="8"
-                  y="188"
-                  width="64"
-                  height="26"
-                  rx="13"
-                  fill="#10B981"
-                />
-                <text
-                  x="40"
-                  y="205"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Tú hoy
-                </text>
-                {/* Flecha apuntando al punto */}
-                <path
-                  d="M 40 188 L 35 183 L 40 178 L 45 183 Z"
-                  fill="#10B981"
-                />
-              </g>
-            </g>
-
-            {/* Punto y burbuja "Tú en 7 días" - aparece cuando la línea llega */}
-            <g>
-              <circle
-                cx="160"
-                cy="120"
-                r="8"
-                fill="#F59E0B"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 0.8s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 1.0s forwards",
-                  transformOrigin: "160px 106px",
-                }}
-              >
-                <rect
-                  x="120"
-                  y="90"
-                  width="80"
-                  height="26"
-                  rx="13"
-                  fill="#F59E0B"
-                />
-                <text
-                  x="160"
-                  y="107"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Tú en 7 días
-                </text>
-                {/* Flecha apuntando al punto */}
-                <path
-                  d="M 160 116 L 155 121 L 160 126 L 165 121 Z"
-                  fill="#F59E0B"
-                />
-              </g>
-            </g>
-
-            {/* Punto y burbuja "Tú en hasta 14 días" - aparece cuando la línea llega */}
-            <g>
-              <circle
-                cx="280"
-                cy="60"
-                r="8"
-                fill="#3B82F6"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 1.3s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.5s ease-out 1.5s forwards",
-                  transformOrigin: "280px 46px",
-                }}
-              >
-                <rect
-                  x="220"
-                  y="30"
-                  width="120"
-                  height="26"
-                  rx="13"
-                  fill="#3B82F6"
-                />
-                <text
-                  x="280"
-                  y="47"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="11"
-                  fontWeight="600"
-                >
-                  Tú en hasta 14 días
-                </text>
-                {/* Flecha apuntando al punto */}
-                <path
-                  d="M 280 56 L 275 61 L 280 66 L 285 61 Z"
-                  fill="#3B82F6"
-                />
-              </g>
-            </g>
-
-            {/* Etiquetas del eje X */}
-            <text
-              x="40"
-              y="235"
-              textAnchor="middle"
-              fill="#6B7280"
-              fontSize="12"
-              fontWeight="500"
-            >
-              Poco
-            </text>
-            <text
-              x="160"
-              y="235"
-              textAnchor="middle"
-              fill="#6B7280"
-              fontSize="12"
-              fontWeight="500"
-            >
-              Medio
-            </text>
-            <text
-              x="280"
-              y="235"
-              textAnchor="middle"
-              fill="#6B7280"
-              fontSize="12"
-              fontWeight="500"
-            >
-              Mucho
-            </text>
-          </svg>
+            Continuar
+          </button>
         </div>
-
-        <p
-          style={{
-            fontSize: "clamp(12px, 3vw, 14px)",
-            color: "#6B7280",
-            textAlign: "center",
-            marginBottom: "24px",
-            fontWeight: "500",
-          }}
-        >
-          Promedio: Por debajo del promedio - Lectura básica
-        </p>
-
-        <button
-          onClick={() => setStep(12)}
-          style={{
-            ...s.button,
-            fontSize: "clamp(14px, 4vw, 16px)",
-            fontWeight: "600",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.transform = "translateY(-2px)";
-            e.target.style.boxShadow =
-              "0 15px 30px -5px rgba(102, 126, 234, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.transform = "translateY(0)";
-            e.target.style.boxShadow =
-              "0 10px 25px -5px rgba(102, 126, 234, 0.4)";
-          }}
-        >
-          Continuar
-        </button>
 
         <style>
           {`
@@ -1865,14 +1879,20 @@ export default function Quiz() {
             @keyframes bubbleIn {
               0% {
                 opacity: 0;
-                transform: scale(0.3) translateY(10px);
+                transform: scale(0.5);
               }
-              60% {
-                transform: scale(1.1) translateY(-2px);
+              70% {
+                transform: scale(1.05);
               }
               100% {
                 opacity: 1;
-                transform: scale(1) translateY(0);
+                transform: scale(1);
+              }
+            }
+
+            @media (max-width: 480px) {
+              .chart-container {
+                height: 100px !important;
               }
             }
           `}
