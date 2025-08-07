@@ -64,10 +64,18 @@ export default function Quiz() {
     []
   );
   useEffect(() => {
-    if (step === 15 && timeLeft === null) {
-      setTimeLeft(300); // Inicia el contador solo cuando llega a la pantalla 15
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnScreen = urlParams.get("return_screen");
+
+    if (returnScreen === "15") {
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      setCurrentScreen(15);
+      setTimeout(() => setCurrentScreen(15), 100);
+      setTimeout(() => setCurrentScreen(15), 300);
+      setTimeout(() => setCurrentScreen(15), 500);
     }
-  }, [step]);
+  }, []);
   useEffect(() => {
     if (step === 15 && timeLeft === null) {
       setTimeLeft(300); // Inicia el contador solo cuando llega a la pantalla 15
@@ -77,15 +85,7 @@ export default function Quiz() {
   useEffect(() => {
     if (timeLeft !== null && timeLeft > 0) {
       const timer = setInterval(() => {
-        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 300));
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [timeLeft]);
-  useEffect(() => {
-    if (timeLeft !== null && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 300));
+        setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
       }, 1000);
       return () => clearInterval(timer);
     }
@@ -109,6 +109,7 @@ export default function Quiz() {
       window.scrollTo({ top: 0, behavior: "instant" });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+
       trackProgress(step);
     };
 
@@ -1560,7 +1561,7 @@ export default function Quiz() {
           </p>
         </div>
 
-        {/* Gráfico con proporción áurea */}
+        {/* Gráfico simple y funcional */}
         <div
           style={{
             background: "rgba(255, 255, 255, 0.9)",
@@ -1572,8 +1573,8 @@ export default function Quiz() {
         >
           <svg
             width="100%"
-            height="130"
-            viewBox="0 0 320 130"
+            height="120"
+            viewBox="0 0 300 120"
             style={{ display: "block" }}
           >
             <defs>
@@ -1586,7 +1587,7 @@ export default function Quiz() {
               >
                 <stop
                   offset="0%"
-                  style={{ stopColor: "#10B981", stopOpacity: 1 }}
+                  style={{ stopColor: "#EF4444", stopOpacity: 1 }}
                 />
                 <stop
                   offset="50%"
@@ -1594,144 +1595,115 @@ export default function Quiz() {
                 />
                 <stop
                   offset="100%"
-                  style={{ stopColor: "#3B82F6", stopOpacity: 1 }}
+                  style={{ stopColor: "#10B981", stopOpacity: 1 }}
                 />
               </linearGradient>
             </defs>
 
-            {/* Líneas de referencia */}
-            <line
-              x1="50"
-              y1="20"
-              x2="50"
-              y2="90"
-              stroke="rgba(107, 114, 128, 0.15)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-            <line
-              x1="160"
-              y1="20"
-              x2="160"
-              y2="90"
-              stroke="rgba(107, 114, 128, 0.15)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-            <line
-              x1="270"
-              y1="20"
-              x2="270"
-              y2="90"
-              stroke="rgba(107, 114, 128, 0.15)"
-              strokeWidth="1"
-              strokeDasharray="2,2"
-            />
-
             {/* Línea base */}
             <line
-              x1="30"
-              y1="90"
-              x2="290"
-              y2="90"
+              x1="40"
+              y1="80"
+              x2="260"
+              y2="80"
               stroke="rgba(107, 114, 128, 0.2)"
               strokeWidth="1"
             />
 
-            {/* Curva principal */}
+            {/* Curva exponencial natural */}
             <path
-              d="M 50 80 Q 130 55, 160 35 T 270 20"
+              d="M 50 75 Q 120 65 150 50 Q 200 25 250 15"
               fill="none"
               stroke="url(#curveGradient)"
               strokeWidth="3"
               strokeLinecap="round"
               style={{
-                strokeDasharray: "350",
-                strokeDashoffset: "350",
+                strokeDasharray: "250",
+                strokeDashoffset: "250",
                 animation: "drawCurve 1.5s ease-out forwards",
               }}
             />
 
-            {/* Puntos animados */}
+            {/* Puntos */}
             <circle
               cx="50"
-              cy="80"
-              r="5"
-              fill="#10B981"
+              cy="75"
+              r="4"
+              fill="#EF4444"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 0.4s forwards",
+                animation: "fadeInPoint 0.4s ease-out 0.5s forwards",
               }}
             />
             <circle
-              cx="160"
-              cy="35"
-              r="5"
+              cx="150"
+              cy="50"
+              r="4"
               fill="#F59E0B"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 0.8s forwards",
+                animation: "fadeInPoint 0.4s ease-out 1s forwards",
               }}
             />
             <circle
-              cx="270"
-              cy="20"
-              r="5"
-              fill="#3B82F6"
+              cx="250"
+              cy="15"
+              r="4"
+              fill="#10B981"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 1.2s forwards",
+                animation: "fadeInPoint 0.4s ease-out 1.5s forwards",
               }}
             />
 
-            {/* Etiquetas sobre puntos */}
+            {/* Etiquetas ARRIBA de los puntos - bien separadas */}
             <text
               x="50"
-              y="70"
+              y="65"
               textAnchor="middle"
-              fill="#10B981"
+              fill="#EF4444"
               fontSize="10"
               fontWeight="600"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 0.6s forwards",
+                animation: "fadeInPoint 0.4s ease-out 0.7s forwards",
               }}
             >
               Tú hoy
             </text>
             <text
-              x="160"
-              y="25"
+              x="150"
+              y="40"
               textAnchor="middle"
               fill="#F59E0B"
               fontSize="10"
               fontWeight="600"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 1.0s forwards",
+                animation: "fadeInPoint 0.4s ease-out 1.2s forwards",
               }}
             >
               7 días
             </text>
             <text
-              x="270"
-              y="10"
+              x="250"
+              y="35"
               textAnchor="middle"
-              fill="#3B82F6"
+              fill="#10B981"
               fontSize="10"
               fontWeight="600"
               style={{
                 opacity: 0,
-                animation: "fadeInPoint 0.4s ease-out 1.4s forwards",
+                animation: "fadeInPoint 0.4s ease-out 1.7s forwards",
               }}
             >
               14 días
             </text>
 
-            {/* Etiquetas del eje X */}
+            {/* Etiquetas del eje X - bien separadas */}
             <text
               x="50"
-              y="110"
+              y="95"
               textAnchor="middle"
               fill="#6B7280"
               fontSize="10"
@@ -1740,8 +1712,8 @@ export default function Quiz() {
               Poco
             </text>
             <text
-              x="160"
-              y="110"
+              x="150"
+              y="95"
               textAnchor="middle"
               fill="#6B7280"
               fontSize="10"
@@ -1750,8 +1722,8 @@ export default function Quiz() {
               Medio
             </text>
             <text
-              x="270"
-              y="110"
+              x="250"
+              y="95"
               textAnchor="middle"
               fill="#6B7280"
               fontSize="10"
@@ -2244,56 +2216,141 @@ export default function Quiz() {
           minHeight: "auto",
         }}
       >
-        <h2
+        {/* Blue Banner - Fixed positioning */}
+        <div
           style={{
-            fontSize: "clamp(20px, 5vw, 28px)",
-            fontWeight: "800",
+            backgroundColor: "#4F46E5",
+            margin: "0 0 24px 0",
+            padding: "20px 16px",
+            color: "white",
             textAlign: "center",
-            marginBottom: "32px",
-            color: "#1F2937",
-            lineHeight: "1.2",
+            borderRadius: "16px",
+            position: "relative",
+            overflow: "hidden",
+            boxSizing: "border-box",
+            width: "100%",
           }}
         >
-          <span
+          <div
             style={{
-              background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              display: "block",
+              marginBottom: "12px",
             }}
           >
-            {name}
-          </span>
-          , tu entrenamiento está listo!
-        </h2>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                marginBottom: "8px",
+                flexWrap: "wrap",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "16px",
+                  flexShrink: 0,
+                }}
+              >
+                ✅
+              </span>
+              <span
+                style={{
+                  fontSize: "clamp(14px, 3.5vw, 16px)",
+                  fontWeight: "700",
+                  lineHeight: "1.3",
+                  textAlign: "center",
+                }}
+              >
+                <strong>{name}</strong>, ya analizamos tus respuestas del test.
+              </span>
+            </div>
+            <p
+              style={{
+                fontSize: "clamp(12px, 3vw, 14px)",
+                margin: "0",
+                opacity: "0.95",
+                lineHeight: "1.4",
+                maxWidth: "100%",
+                wordWrap: "break-word",
+              }}
+            >
+              Y esto fue lo que revelaron sobre tu estilo de lectura y nivel
+              actual de comprensión:
+            </p>
+          </div>
+        </div>
+
+        {/* Main benefit text */}
+        <div
+          style={{
+            marginBottom: "24px",
+            textAlign: "center",
+            padding: "0 4px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "clamp(14px, 3.5vw, 16px)",
+              fontWeight: "600",
+              color: "#1F2937",
+              lineHeight: "1.5",
+              marginBottom: "16px",
+              wordWrap: "break-word",
+            }}
+          >
+            <strong>
+              Con base en tus respuestas, podemos ayudarte a leer libros
+              completos en menos de 2 horas, retener hasta el 80% de lo que lees
+              y aplicar ese conocimiento de forma práctica desde la primera
+              semana.
+            </strong>
+          </p>
+        </div>
+
+        {/* Results title */}
+        <h3
+          style={{
+            fontSize: "clamp(16px, 4vw, 20px)",
+            fontWeight: "700",
+            color: "#1F2937",
+            marginBottom: "24px",
+            textAlign: "center",
+          }}
+        >
+          Tus resultados:
+        </h3>
 
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "20px",
+            gap: "16px",
             marginBottom: "32px",
           }}
         >
           {/* Columna Antes */}
           <div style={{ textAlign: "center" }}>
-            <h3
+            <h4
               style={{
-                fontSize: "clamp(14px, 4vw, 18px)",
+                fontSize: "clamp(13px, 3.5vw, 16px)",
                 fontWeight: "700",
                 color: "#6B7280",
-                marginBottom: "16px",
+                marginBottom: "12px",
+                margin: "0 0 12px 0",
               }}
             >
               Antes
-            </h3>
+            </h4>
             <div
               style={{
                 width: "100%",
                 aspectRatio: "1",
-                borderRadius: "16px",
+                borderRadius: "12px",
                 overflow: "hidden",
-                marginBottom: "20px",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
+                marginBottom: "16px",
+                boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
               }}
             >
               <img
@@ -2308,30 +2365,37 @@ export default function Quiz() {
               />
             </div>
 
-            {/* Métricas Antes - igual que antes */}
-            <div style={{ marginBottom: "16px" }}>
+            {/* Métricas Antes - Optimized */}
+            <div style={{ marginBottom: "12px" }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Velocidad de lectura
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#EF4444",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   22%
@@ -2340,18 +2404,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Bajo</span>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
+                  Bajo
+                </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2360,7 +2432,7 @@ export default function Quiz() {
                     width: "22%",
                     height: "100%",
                     background: "linear-gradient(90deg, #EF4444, #DC2626)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out forwards",
                     transformOrigin: "left",
                   }}
@@ -2368,29 +2440,36 @@ export default function Quiz() {
               </div>
             </div>
 
-            <div style={{ marginBottom: "16px" }}>
+            <div style={{ marginBottom: "12px" }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Enfoque y comprensión
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#EF4444",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   24%
@@ -2399,18 +2478,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Bajo</span>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
+                  Bajo
+                </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2419,7 +2506,7 @@ export default function Quiz() {
                     width: "24%",
                     height: "100%",
                     background: "linear-gradient(90deg, #EF4444, #DC2626)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out 0.5s forwards",
                     transformOrigin: "left",
                     transform: "scaleX(0)",
@@ -2433,24 +2520,31 @@ export default function Quiz() {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Nivel de energía
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#EF4444",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   18%
@@ -2459,18 +2553,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Bajo</span>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
+                  Bajo
+                </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2479,7 +2581,7 @@ export default function Quiz() {
                     width: "18%",
                     height: "100%",
                     background: "linear-gradient(90deg, #EF4444, #DC2626)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out 1s forwards",
                     transformOrigin: "left",
                     transform: "scaleX(0)",
@@ -2491,24 +2593,25 @@ export default function Quiz() {
 
           {/* Columna Después */}
           <div style={{ textAlign: "center" }}>
-            <h3
+            <h4
               style={{
-                fontSize: "clamp(14px, 4vw, 18px)",
+                fontSize: "clamp(13px, 3.5vw, 16px)",
                 fontWeight: "700",
                 color: "#6B7280",
-                marginBottom: "16px",
+                marginBottom: "12px",
+                margin: "0 0 12px 0",
               }}
             >
               Después
-            </h3>
+            </h4>
             <div
               style={{
                 width: "100%",
                 aspectRatio: "1",
-                borderRadius: "16px",
+                borderRadius: "12px",
                 overflow: "hidden",
-                marginBottom: "20px",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
+                marginBottom: "16px",
+                boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
               }}
             >
               <img
@@ -2523,30 +2626,37 @@ export default function Quiz() {
               />
             </div>
 
-            {/* Métricas Después - igual que antes */}
-            <div style={{ marginBottom: "16px" }}>
+            {/* Métricas Después - Optimized */}
+            <div style={{ marginBottom: "12px" }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Velocidad de lectura
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#10B981",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   100%
@@ -2555,20 +2665,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
                   Rápida
                 </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2577,7 +2693,7 @@ export default function Quiz() {
                     width: "100%",
                     height: "100%",
                     background: "linear-gradient(90deg, #10B981, #059669)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out 1.5s forwards",
                     transformOrigin: "left",
                     transform: "scaleX(0)",
@@ -2586,29 +2702,36 @@ export default function Quiz() {
               </div>
             </div>
 
-            <div style={{ marginBottom: "16px" }}>
+            <div style={{ marginBottom: "12px" }}>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Enfoque y comprensión
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#10B981",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   92%
@@ -2617,20 +2740,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
                   Fuerte
                 </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2639,7 +2768,7 @@ export default function Quiz() {
                     width: "92%",
                     height: "100%",
                     background: "linear-gradient(90deg, #10B981, #059669)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out 2s forwards",
                     transformOrigin: "left",
                     transform: "scaleX(0)",
@@ -2653,24 +2782,31 @@ export default function Quiz() {
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "8px",
+                  alignItems: "flex-start",
+                  marginBottom: "6px",
+                  minHeight: "auto",
                 }}
               >
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "600",
                     color: "#374151",
+                    lineHeight: "1.2",
+                    textAlign: "left",
+                    maxWidth: "70%",
+                    wordWrap: "break-word",
                   }}
                 >
                   Nivel de energía
                 </span>
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "clamp(10px, 2.5vw, 12px)",
                     fontWeight: "700",
                     color: "#10B981",
+                    flexShrink: 0,
+                    marginLeft: "4px",
                   }}
                 >
                   91%
@@ -2679,18 +2815,26 @@ export default function Quiz() {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   marginBottom: "4px",
                 }}
               >
-                <span style={{ fontSize: "10px", color: "#9CA3AF" }}>Alto</span>
+                <span
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "#9CA3AF",
+                    fontWeight: "500",
+                  }}
+                >
+                  Alto
+                </span>
               </div>
               <div
                 style={{
                   width: "100%",
-                  height: "8px",
+                  height: "6px",
                   backgroundColor: "#F3F4F6",
-                  borderRadius: "4px",
+                  borderRadius: "3px",
                   overflow: "hidden",
                 }}
               >
@@ -2699,7 +2843,7 @@ export default function Quiz() {
                     width: "91%",
                     height: "100%",
                     background: "linear-gradient(90deg, #10B981, #059669)",
-                    borderRadius: "4px",
+                    borderRadius: "3px",
                     animation: "fillBar 2s ease-out 2.5s forwards",
                     transformOrigin: "left",
                     transform: "scaleX(0)",
@@ -2710,488 +2854,1348 @@ export default function Quiz() {
           </div>
         </div>
 
-        {/* Sección ¿Qué recibirás? */}
+        {/* Subconscious Mind Section - Super Attractive */}
         <div
           style={{
-            background:
-              "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
-            border: "1px solid rgba(79, 70, 229, 0.2)",
+            marginTop: "40px",
+            marginBottom: "32px",
+            textAlign: "center",
+            padding: "24px 16px",
+            background: "linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)",
             borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            backdropFilter: "blur(10px)",
+            border: "2px solid transparent",
+            backgroundImage:
+              "linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%), linear-gradient(135deg, #4F46E5, #7C3AED)",
+            backgroundOrigin: "border-box",
+            backgroundClip: "padding-box, border-box",
+            position: "relative",
+            overflow: "hidden",
           }}
         >
-          <h3
+          {/* Animated Background Elements */}
+          <div
             style={{
-              fontSize: "clamp(18px, 5vw, 24px)",
-              fontWeight: "800",
-              textAlign: "center",
-              marginBottom: "32px",
-              color: "#1F2937",
+              position: "absolute",
+              top: "10px",
+              right: "20px",
+              fontSize: "24px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite",
             }}
           >
-            ¿Qué recibirás?
-          </h3>
+            🧠
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "15px",
+              left: "15px",
+              fontSize: "20px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite 1.5s",
+            }}
+          >
+            ⚡
+          </div>
+
+          <p
+            style={{
+              fontSize: "clamp(15px, 3.8vw, 18px)",
+              fontWeight: "600",
+              color: "#1F2937",
+              lineHeight: "1.6",
+              margin: "0",
+              wordWrap: "break-word",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            Con este entrenamiento personalizado, activarás tu{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #7C3AED, #EC4899)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontWeight: "800",
+                fontSize: "clamp(16px, 4vw, 20px)",
+                textShadow: "0 0 20px rgba(124, 58, 237, 0.3)",
+                position: "relative",
+              }}
+            >
+              mente subconsciente
+            </span>{" "}
+            —la parte más poderosa de tu cerebro— para leer más rápido,
+            comprender mejor y retener lo que lees con total claridad.
+          </p>
 
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "20px",
+              marginTop: "16px",
+              padding: "12px 20px",
+              background: "rgba(124, 58, 237, 0.1)",
+              borderRadius: "12px",
+              border: "1px solid rgba(124, 58, 237, 0.2)",
             }}
           >
-            {/* Item 1 - Entrenamiento completo */}
-            <div
+            <p
               style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
+                fontSize: "clamp(14px, 3.5vw, 16px)",
+                fontWeight: "600",
+                color: "#7C3AED",
+                margin: "0",
+                fontStyle: "italic",
               }}
             >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "1",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  marginBottom: "16px",
-                }}
-              >
-                <img
-                  src="/images/imagen1.webp"
-                  alt="Entrenamiento completo"
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginBottom: "8px",
-                }}
-              >
-                <span
-                  style={{
-                    color: "#10B981",
-                    fontSize: "16px",
-                    marginRight: "8px",
-                    marginTop: "2px",
-                  }}
-                >
-                  ✅
-                </span>
-                <h4
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: "#374151",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Entrenamiento completo en 14 días
-                </h4>
-              </div>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#6B7280",
-                  lineHeight: "1.4",
-                  margin: 0,
-                  paddingLeft: "24px",
-                }}
-              >
-                Para aumentar tu velocidad de lectura y tu capacidad de
-                comprensión. Solo necesitarás 8 minutos al día para entrenar y
-                obtener el resultado
-              </p>
-            </div>
-
-            {/* Item 2 - Reglas de lectura */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "1",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  marginBottom: "16px",
-                }}
-              >
-                <img
-                  src="/images/imagen2.webp"
-                  alt="Reglas de lectura"
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginBottom: "8px",
-                }}
-              >
-                <span
-                  style={{
-                    color: "#10B981",
-                    fontSize: "16px",
-                    marginRight: "8px",
-                    marginTop: "2px",
-                  }}
-                >
-                  ✅
-                </span>
-                <h4
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: "#374151",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Reglas de lectura
-                </h4>
-              </div>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#6B7280",
-                  lineHeight: "1.4",
-                  margin: "0 0 12px 0",
-                  paddingLeft: "24px",
-                }}
-              >
-                Para personas que tienen problemas para concentrarse y se
-                pierden mientras leen.
-              </p>
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "#9CA3AF",
-                  margin: 0,
-                  paddingLeft: "24px",
-                  fontStyle: "italic",
-                }}
-              >
-                Plantilla (PDF) para que puedas imprimir
-              </p>
-            </div>
-
-            {/* Item 3 - Videos de apoyo */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "1",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  marginBottom: "16px",
-                }}
-              >
-                <img
-                  src="/images/imagen3.webp"
-                  alt="Videos de apoyo"
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginBottom: "8px",
-                }}
-              >
-                <span
-                  style={{
-                    color: "#10B981",
-                    fontSize: "16px",
-                    marginRight: "8px",
-                    marginTop: "2px",
-                  }}
-                >
-                  ✅
-                </span>
-                <h4
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: "#374151",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Videos de apoyo
-                </h4>
-              </div>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#6B7280",
-                  lineHeight: "1.4",
-                  margin: 0,
-                  paddingLeft: "24px",
-                }}
-              >
-                Aprende de forma rápida y sencilla
-              </p>
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "#9CA3AF",
-                  margin: "8px 0 0 0",
-                  paddingLeft: "24px",
-                  fontStyle: "italic",
-                }}
-              >
-                (Acceso a los videos en enlaces que encontrarás en el libro
-                digital)
-              </p>
-            </div>
-
-            {/* Item 4 - Hoja de cálculo SMART */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  aspectRatio: "1",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  marginBottom: "16px",
-                }}
-              >
-                <img
-                  src="/images/imagen4.webp"
-                  alt="Hoja de cálculo SMART"
-                  loading="lazy"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginBottom: "8px",
-                }}
-              >
-                <span
-                  style={{
-                    color: "#10B981",
-                    fontSize: "16px",
-                    marginRight: "8px",
-                    marginTop: "2px",
-                  }}
-                >
-                  ✅
-                </span>
-                <h4
-                  style={{
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    color: "#374151",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Hoja de cálculo SMART
-                </h4>
-              </div>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#6B7280",
-                  lineHeight: "1.4",
-                  margin: 0,
-                  paddingLeft: "24px",
-                }}
-              >
-                Para comprobar tu progreso diariamente
-              </p>
-            </div>
+              ✨ Es como si tu mente ya conociera el libro antes de abrirlo.
+            </p>
           </div>
         </div>
-        {/* Sección Bonos */}
+
+        {/* CTA Button - Super Attractive Red */}
         <div
           style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+            marginTop: "32px",
+            textAlign: "center",
+            padding: "0 4px",
           }}
         >
+          <button
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              padding: "clamp(16px, 4vw, 20px) clamp(20px, 5vw, 32px)",
+              backgroundColor: "#DC2626",
+              background:
+                "linear-gradient(135deg, #DC2626 0%, #EF4444 50%, #F87171 100%)",
+              color: "white",
+              border: "none",
+              borderRadius: "16px",
+              fontSize: "clamp(14px, 3.5vw, 18px)",
+              fontWeight: "700",
+              lineHeight: "1.3",
+              textAlign: "center",
+              cursor: "pointer",
+              boxShadow:
+                "0 8px 25px -5px rgba(220, 38, 38, 0.4), 0 4px 6px -2px rgba(220, 38, 38, 0.1)",
+              transition: "all 0.3s ease",
+              position: "relative",
+              overflow: "hidden",
+              transform: "translateY(0)",
+              animation: "buttonPulse 2s ease-in-out infinite",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "translateY(-2px)";
+              e.target.style.boxShadow =
+                "0 12px 30px -8px rgba(220, 38, 38, 0.5), 0 6px 8px -3px rgba(220, 38, 38, 0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow =
+                "0 8px 25px -5px rgba(220, 38, 38, 0.4), 0 4px 6px -2px rgba(220, 38, 38, 0.1)";
+            }}
+            onTouchStart={(e) => {
+              e.target.style.transform = "translateY(-1px)";
+            }}
+            onTouchEnd={(e) => {
+              e.target.style.transform = "translateY(0)";
+            }}
+            onClick={() => {
+              // Guardar estado actual antes de ir a Hotmart
+              sessionStorage.setItem("returnToScreen", "15");
+              sessionStorage.setItem("userReturnedFromPayment", "true");
+
+              // Ir a Hotmart con el nuevo link
+              window.location.href =
+                "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1&return_screen=15";
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                flexWrap: "wrap",
+              }}
+            >
+              <span style={{ fontSize: "clamp(16px, 4vw, 20px)" }}>🔓</span>
+              <span style={{ textAlign: "center" }}>
+                <strong>
+                  Quiero activar mi entrenamiento personalizado ahora
+                </strong>
+              </span>
+            </div>
+          </button>
+          {/* Agrega este CSS a tu componente */}
+          <style jsx>{`
+            @keyframes buttonPulse {
+              0%,
+              100% {
+                transform: scale(1) translateY(0);
+                box-shadow: 0 8px 25px -5px rgba(220, 38, 38, 0.4),
+                  0 4px 6px -2px rgba(220, 38, 38, 0.1);
+              }
+              50% {
+                transform: scale(1.05) translateY(0);
+                box-shadow: 0 12px 35px -8px rgba(220, 38, 38, 0.7),
+                  0 6px 8px -3px rgba(220, 38, 38, 0.3);
+              }
+            }
+          `}</style>
+        </div>
+        {/* Why It Works Section - After Button */}
+        <div
+          style={{
+            marginTop: "40px",
+            marginBottom: "32px",
+            textAlign: "center",
+            padding: "24px 16px",
+            background: "linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)",
+            borderRadius: "20px",
+            border: "2px solid transparent",
+            backgroundImage:
+              "linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%), linear-gradient(135deg, #F59E0B, #D97706)",
+            backgroundOrigin: "border-box",
+            backgroundClip: "padding-box, border-box",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Animated Background Elements */}
+          <div
+            style={{
+              position: "absolute",
+              top: "15px",
+              right: "20px",
+              fontSize: "24px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite",
+            }}
+          >
+            ⚡
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "15px",
+              left: "15px",
+              fontSize: "20px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite 1.5s",
+            }}
+          >
+            🧠
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "10px",
+              fontSize: "18px",
+              opacity: "0.2",
+              animation: "float 3s ease-in-out infinite 3s",
+            }}
+          >
+            💡
+          </div>
+
+          {/* Question Header */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              marginBottom: "20px",
+              gap: "8px",
+              marginBottom: "16px",
+              flexWrap: "wrap",
             }}
           >
-            <span style={{ fontSize: "28px", marginRight: "12px" }}>🎁</span>
+            <span style={{ fontSize: "clamp(18px, 4.5vw, 24px)" }}>❓</span>
             <h3
               style={{
-                fontSize: "clamp(18px, 5vw, 24px)",
+                fontSize: "clamp(16px, 4vw, 20px)",
                 fontWeight: "800",
-                color: "#1F2937",
-                margin: 0,
+                color: "#92400E",
+                margin: "0",
+                lineHeight: "1.2",
               }}
             >
-              Bonos que recibirás por tu compra{" "}
-              <span style={{ fontSize: "24px" }}>👇</span>
+              ¿Por qué este método funciona tan bien?
             </h3>
           </div>
 
-          <div style={{ marginBottom: "24px" }}>
-            {[
-              "🎁 Videos de apoyo",
-              "🎁 Atención directa vía WhatsApp",
-              "🎁 Bono sorpresa (solo para estudiantes que completen los 14 días y envíen el resultado)",
-              "🎁 Hoja de cálculo SMART",
-              "🎁 Plantilla de regla de lectura",
-            ].map((bonus, index) => (
-              <div
-                key={index}
+          <p
+            style={{
+              fontSize: "clamp(14px, 3.5vw, 16px)",
+              fontWeight: "600",
+              color: "#1F2937",
+              lineHeight: "1.6",
+              margin: "0 0 16px 0",
+              wordWrap: "break-word",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            Porque no solo usa tu mente consciente (la que lee palabra por
+            palabra), sino tu{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #F59E0B, #D97706)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontWeight: "800",
+                fontSize: "clamp(15px, 3.8vw, 18px)",
+              }}
+            >
+              mente subconsciente
+            </span>
+            , que entiende rápido y recuerda sin esfuerzo.
+          </p>
+
+          <div
+            style={{
+              padding: "16px 20px",
+              background: "rgba(245, 158, 11, 0.1)",
+              borderRadius: "12px",
+              border: "1px solid rgba(245, 158, 11, 0.3)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "clamp(13px, 3.2vw, 15px)",
+                fontWeight: "500",
+                color: "#92400E",
+                margin: "0",
+                lineHeight: "1.5",
+              }}
+            >
+              Esto se basa en la{" "}
+              <span
                 style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  marginBottom: "12px",
-                  fontSize: "14px",
-                  color: "#374151",
+                  fontWeight: "700",
+                  background: "linear-gradient(135deg, #F59E0B, #D97706)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                teoría del doble procesamiento
+              </span>
+              , que dice que tenemos dos formas de pensar: una lenta y una
+              rápida. Este método activa la rápida:{" "}
+              <span
+                style={{
+                  fontWeight: "700",
+                  background: "linear-gradient(135deg, #F59E0B, #D97706)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                tu mente subconsciente
+              </span>
+              , para que puedas leer más, entender mejor y recordarlo todo con
+              más facilidad.
+            </p>
+          </div>
+        </div>
+        {/* What You'll Receive Section */}
+        <div
+          style={{
+            marginTop: "24px",
+            marginBottom: "32px",
+          }}
+        >
+          {/* Title */}
+          <div
+            style={{
+              textAlign: "center",
+              padding: "24px 16px",
+              background: "linear-gradient(135deg, #1F2937 0%, #374151 100%)",
+              borderRadius: "20px",
+              position: "relative",
+              overflow: "hidden",
+              border: "3px solid transparent",
+              backgroundImage:
+                "linear-gradient(135deg, #1F2937 0%, #374151 100%), linear-gradient(135deg, #DC2626, #EF4444)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+              marginBottom: "20px",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "clamp(16px, 4.2vw, 24px)",
+                fontWeight: "800",
+                lineHeight: "1.3",
+                margin: "0",
+                textAlign: "center",
+                color: "white",
+                textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+              }}
+            >
+              ESTO ES A TODO LO QUE TENDRÁS ACCESO,{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, #DC2626, #EF4444, #F87171)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontWeight: "900",
+                  fontSize: "clamp(18px, 4.8vw, 28px)",
+                  textShadow: "none",
+                  display: "inline-block",
+                }}
+              >
+                SI INGRESAS HOY:
+              </span>
+            </h2>
+          </div>
+
+          {/* Grid Container */}
+          <div
+            style={{
+              padding: "20px 12px",
+              background: "linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)",
+              borderRadius: "20px",
+              border: "2px solid rgba(71, 85, 105, 0.1)",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "clamp(18px, 4.5vw, 24px)",
+                fontWeight: "800",
+                color: "#334155",
+                textAlign: "center",
+                marginBottom: "20px",
+                margin: "0 0 20px 0",
+              }}
+            >
+              ¿Qué recibirás?
+            </h3>
+
+            {/* 2x2 Grid */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gridTemplateRows: "auto auto",
+                gap: "12px",
+                maxWidth: "100%",
+              }}
+            >
+              {/* Item 1 - Método Focus Read */}
+              <div
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "12px",
+                  padding: "12px 8px",
+                  boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
+                  border: "1px solid rgba(71, 85, 105, 0.1)",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    marginBottom: "8px",
+                    backgroundColor: "#F1F5F9",
+                  }}
+                >
+                  <img
+                    src="/images/imagen1.webp"
+                    alt="Método Focus Read"
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "4px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      flexShrink: 0,
+                      marginTop: "1px",
+                    }}
+                  >
+                    ✅
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(9px, 2.2vw, 12px)",
+                      fontWeight: "800",
+                      color: "#334155",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    Método Focus Read
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "clamp(7px, 1.8vw, 11px)",
+                    color: "#64748B",
+                    lineHeight: "1.3",
+                    margin: "0",
+                    textAlign: "left",
+                    fontWeight: "500",
+                  }}
+                >
+                  Entrenamiento visual para multiplicar tu velocidad de lectura
+                  en 14 días. Tu mente reconocerá ideas antes de leerlas.
+                </p>
+              </div>
+
+              {/* Item 2 - Kit de Retos */}
+              <div
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "12px",
+                  padding: "12px 8px",
+                  boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
+                  border: "1px solid rgba(71, 85, 105, 0.1)",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    marginBottom: "8px",
+                    backgroundColor: "#F1F5F9",
+                  }}
+                >
+                  <img
+                    src="/images/imagen2.webp"
+                    alt="Kit de Retos"
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "4px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      flexShrink: 0,
+                      marginTop: "1px",
+                    }}
+                  >
+                    ✅
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(9px, 2.2vw, 12px)",
+                      fontWeight: "800",
+                      color: "#334155",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    Kit de Retos de Lectura
+                  </span>
+                </div>
+                <div style={{ marginBottom: "4px" }}>
+                  <span
+                    style={{
+                      fontSize: "clamp(6px, 1.5vw, 9px)",
+                      color: "#9CA3AF",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    $14 USD
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(7px, 1.8vw, 10px)",
+                      fontWeight: "700",
+                      color: "#DC2626",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    HOY: $0.00
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "clamp(7px, 1.8vw, 11px)",
+                    color: "#64748B",
+                    lineHeight: "1.3",
+                    margin: "0",
+                    textAlign: "left",
+                    fontWeight: "500",
+                  }}
+                >
+                  50 textos para desafiar tu velocidad y comprensión. Mide tu
+                  progreso y mantén tu mente activa.
+                </p>
+              </div>
+
+              {/* Item 3 - Dominando la Procrastinación */}
+              <div
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "12px",
+                  padding: "12px 8px",
+                  boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
+                  border: "1px solid rgba(71, 85, 105, 0.1)",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    marginBottom: "8px",
+                    backgroundColor: "#F1F5F9",
+                  }}
+                >
+                  <img
+                    src="/images/imagen3.webp"
+                    alt="Dominando la Procrastinación"
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "4px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      flexShrink: 0,
+                      marginTop: "1px",
+                    }}
+                  >
+                    ✅
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(9px, 2.2vw, 12px)",
+                      fontWeight: "800",
+                      color: "#334155",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    Dominando la Procrastinación
+                  </span>
+                </div>
+                <div style={{ marginBottom: "4px" }}>
+                  <span
+                    style={{
+                      fontSize: "clamp(6px, 1.5vw, 9px)",
+                      color: "#9CA3AF",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    $12 USD
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(7px, 1.8vw, 10px)",
+                      fontWeight: "700",
+                      color: "#DC2626",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    HOY: $0.00
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "clamp(7px, 1.8vw, 11px)",
+                    color: "#64748B",
+                    lineHeight: "1.3",
+                    margin: "0",
+                    textAlign: "left",
+                    fontWeight: "500",
+                  }}
+                >
+                  Guía definitiva para dejar de postergar y ejecutar con enfoque
+                  total. Activa tu mejor versión desde hoy.
+                </p>
+              </div>
+
+              {/* Item 4 - Gimnasia Ocular */}
+              <div
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: "12px",
+                  padding: "12px 8px",
+                  boxShadow: "0 4px 15px -3px rgba(0, 0, 0, 0.1)",
+                  border: "1px solid rgba(71, 85, 105, 0.1)",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                    marginBottom: "8px",
+                    backgroundColor: "#F1F5F9",
+                  }}
+                >
+                  <img
+                    src="/images/imagen4.webp"
+                    alt="Gimnasia Ocular"
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "4px",
+                    marginBottom: "6px",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "10px",
+                      flexShrink: 0,
+                      marginTop: "1px",
+                    }}
+                  >
+                    ✅
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(9px, 2.2vw, 12px)",
+                      fontWeight: "800",
+                      color: "#334155",
+                      lineHeight: "1.1",
+                      textAlign: "left",
+                    }}
+                  >
+                    Gimnasia Ocular Intensiva
+                  </span>
+                </div>
+                <div style={{ marginBottom: "4px" }}>
+                  <span
+                    style={{
+                      fontSize: "clamp(6px, 1.5vw, 9px)",
+                      color: "#9CA3AF",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    $15 USD
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "clamp(7px, 1.8vw, 10px)",
+                      fontWeight: "700",
+                      color: "#DC2626",
+                      marginLeft: "4px",
+                    }}
+                  >
+                    HOY: $0.00
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontSize: "clamp(7px, 1.8vw, 11px)",
+                    color: "#64748B",
+                    lineHeight: "1.3",
+                    margin: "0",
+                    textAlign: "left",
+                    fontWeight: "500",
+                  }}
+                >
+                  Ejercicios visuales en video para mejorar tu visión periférica
+                  y activar tu subconsciente lector.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Special Offer Section with Countdown */}
+        <div
+          style={{
+            marginTop: "16px",
+            marginBottom: "32px",
+            background: "linear-gradient(135deg, #DC2626 0%, #EF4444 100%)",
+            borderRadius: "20px",
+            padding: "0",
+            overflow: "hidden",
+            boxShadow:
+              "0 20px 25px -5px rgba(220, 38, 38, 0.25), 0 10px 10px -5px rgba(220, 38, 38, 0.1)",
+            position: "relative",
+            border: "3px solid rgba(255,255,255,0.2)",
+          }}
+        >
+          {/* Animated Glow Effect */}
+          <div
+            style={{
+              position: "absolute",
+              top: "-50%",
+              left: "-50%",
+              width: "200%",
+              height: "200%",
+              background:
+                "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)",
+              animation: "rotate 20s linear infinite",
+            }}
+          />
+
+          {/* Header Banner */}
+          <div
+            style={{
+              backgroundColor: "#991B1B",
+              padding: "12px 16px",
+              textAlign: "center",
+              position: "relative",
+              zIndex: 1,
+              borderBottom: "2px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "clamp(13px, 3.2vw, 16px)",
+                fontWeight: "900",
+                color: "white",
+                margin: "0",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+              }}
+            >
+              🔥 OFERTA DISPONIBLE HASTA
+            </h3>
+          </div>
+
+          {/* Countdown Timer */}
+          <div
+            style={{
+              padding: "16px",
+              textAlign: "center",
+              position: "relative",
+              zIndex: 1,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "12px",
+                marginBottom: "16px",
+              }}
+            >
+              {/* Minutes */}
+              <div
+                style={{
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  borderRadius: "12px",
+                  padding: "12px 16px",
+                  minWidth: "70px",
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "clamp(20px, 6vw, 28px)",
+                    fontWeight: "900",
+                    color: "white",
+                    lineHeight: "1",
+                    textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  {timeLeft !== null
+                    ? Math.floor(timeLeft / 60)
+                        .toString()
+                        .padStart(2, "0")
+                    : "05"}
+                </div>
+                <div
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "rgba(255,255,255,0.9)",
+                    fontWeight: "600",
+                    marginTop: "2px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  MINUTOS
+                </div>
+              </div>
+
+              {/* Seconds */}
+              <div
+                style={{
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  borderRadius: "12px",
+                  padding: "12px 16px",
+                  minWidth: "70px",
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.2)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "clamp(20px, 6vw, 28px)",
+                    fontWeight: "900",
+                    color: "white",
+                    lineHeight: "1",
+                    textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                  }}
+                >
+                  {timeLeft !== null
+                    ? (timeLeft % 60).toString().padStart(2, "0")
+                    : "00"}
+                </div>
+                <div
+                  style={{
+                    fontSize: "clamp(8px, 2vw, 10px)",
+                    color: "rgba(255,255,255,0.9)",
+                    fontWeight: "600",
+                    marginTop: "2px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  SEGUNDOS
+                </div>
+              </div>
+            </div>
+
+            {/* Rest of the content... Special Condition Banner, Product Info, CTA Button */}
+            {/* (Keep the same as before) */}
+          </div>
+        </div>
+        {/* Special Condition Banner */}
+        <div
+          style={{
+            marginTop: "8px",
+            marginBottom: "8px",
+            backgroundColor: "#2563EB",
+            borderRadius: "12px",
+            padding: "12px 16px",
+            background: "linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)",
+            boxShadow: "0 4px 15px -3px rgba(37, 99, 235, 0.3)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "clamp(11px, 2.8vw, 14px)",
+              fontWeight: "700",
+              color: "white",
+              margin: "0",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+              textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+              textAlign: "center",
+            }}
+          >
+            🎯 CONDICIÓN ESPECIAL - DESCUENTO DE 47 USD
+          </p>
+        </div>
+
+        {/* Product Info Card */}
+        <div
+          style={{
+            marginTop: "8px",
+            marginBottom: "8px",
+            backgroundColor: "white",
+            borderRadius: "16px",
+            padding: "20px 16px",
+            boxShadow:
+              "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+            border: "1px solid rgba(229, 231, 235, 0.8)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            <div style={{ textAlign: "left", flex: 1 }}>
+              <h4
+                style={{
+                  fontSize: "clamp(16px, 4vw, 20px)",
+                  fontWeight: "800",
+                  color: "#1F2937",
+                  margin: "0 0 6px 0",
+                  lineHeight: "1.2",
+                }}
+              >
+                Método FocusRead
+              </h4>
+              <p
+                style={{
+                  fontSize: "clamp(12px, 3vw, 14px)",
+                  color: "#6B7280",
+                  margin: "0",
+                  fontWeight: "500",
+                  lineHeight: "1.3",
+                }}
+              >
+                Libro electrónico completo + 5 bonos
+              </p>
+            </div>
+
+            <div style={{ textAlign: "right" }}>
+              <div
+                style={{
+                  fontSize: "clamp(10px, 2.5vw, 12px)",
+                  color: "#9CA3AF",
+                  textDecoration: "line-through",
+                  marginBottom: "4px",
                   fontWeight: "500",
                 }}
               >
-                <span style={{ marginRight: "8px", fontSize: "16px" }}>
-                  {bonus.split(" ")[0]}
-                </span>
-                <span>{bonus.split(" ").slice(1).join(" ")}</span>
+                Antes: 57 USD
               </div>
-            ))}
-          </div>
-
-          <div
-            style={{
-              background: "#000000",
-              color: "white",
-              padding: "16px",
-              borderRadius: "12px",
-              textAlign: "center",
-              marginBottom: "20px",
-              fontWeight: "700",
-              fontSize: "18px",
-            }}
-          >
-            ACCESO DE POR VIDA
-          </div>
-
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <p
-              style={{
-                fontSize: "16px",
-                color: "#374151",
-                margin: "0 0 8px 0",
-                fontWeight: "500",
-              }}
-            >
-              ¡Haces un pago único de{" "}
-              <span style={{ color: "#EF4444", fontWeight: "700" }}>
-                9,99 USD
-              </span>{" "}
-              y
-            </p>
-            <p
-              style={{
-                fontSize: "16px",
-                color: "#374151",
-                margin: 0,
-                fontWeight: "500",
-              }}
-            >
-              tienes{" "}
-              <span
+              <div
                 style={{
-                  background: "linear-gradient(135deg, #EF4444, #DC2626)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  fontWeight: "700",
+                  fontSize: "clamp(18px, 5vw, 24px)",
+                  fontWeight: "900",
+                  color: "#10B981",
+                  lineHeight: "1",
+                  marginBottom: "4px",
                 }}
               >
-                acceso al material de por vida
+                Ahora 9.99 USD
+              </div>
+              <div
+                style={{
+                  fontSize: "clamp(8px, 2vw, 10px)",
+                  color: "#059669",
+                  fontWeight: "600",
+                  lineHeight: "1.2",
+                  textAlign: "right",
+                }}
+              >
+                Disponible para pagar a cuotas
+                <br />
+                con tarjeta de crédito
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Super Attractive CTA Button with Pulse */}
+        <div
+          style={{
+            marginTop: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <button
+            style={{
+              width: "100%",
+              padding: "18px 24px",
+              background:
+                "linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%)",
+              color: "#92400E",
+              border: "none",
+              borderRadius: "16px",
+              fontSize: "clamp(13px, 3.2vw, 17px)",
+              fontWeight: "900",
+              textAlign: "center",
+              cursor: "pointer",
+              boxShadow:
+                "0 8px 25px -5px rgba(251, 191, 36, 0.5), 0 4px 6px -2px rgba(251, 191, 36, 0.2)",
+              transition: "all 0.3s ease",
+              textTransform: "uppercase",
+              letterSpacing: "0.8px",
+              border: "2px solid rgba(146, 64, 14, 0.3)",
+              position: "relative",
+              overflow: "hidden",
+              animation: "buttonPulse 2s ease-in-out infinite",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "translateY(-2px) scale(1.02)";
+              e.target.style.boxShadow =
+                "0 12px 35px -8px rgba(251, 191, 36, 0.7), 0 6px 8px -3px rgba(251, 191, 36, 0.4)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "translateY(0) scale(1)";
+              e.target.style.boxShadow =
+                "0 8px 25px -5px rgba(251, 191, 36, 0.5), 0 4px 6px -2px rgba(251, 191, 36, 0.2)";
+            }}
+            onTouchStart={(e) => {
+              e.target.style.transform = "translateY(-1px) scale(1.01)";
+            }}
+            onTouchEnd={(e) => {
+              e.target.style.transform = "translateY(0) scale(1)";
+            }}
+            onClick={() => {
+              window.location.href =
+                "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1&return_screen=15";
+            }}
+          >
+            {/* Gradient overlay for extra depth */}
+            <div
+              style={{
+                position: "absolute",
+                top: "0",
+                left: "0",
+                right: "0",
+                bottom: "0",
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)",
+                borderRadius: "14px",
+                pointerEvents: "none",
+              }}
+            />
+
+            <span
+              style={{
+                position: "relative",
+                zIndex: 1,
+                textShadow: "0 1px 2px rgba(0,0,0,0.1)",
+              }}
+            >
+              🔒 QUIERO GARANTIZAR MI ACCESO AHORA
+            </span>
+          </button>
+        </div>
+        {/* Bonuses Section */}
+        <div
+          style={{
+            marginTop: "8px",
+            marginBottom: "8px",
+            backgroundColor: "white",
+            borderRadius: "16px",
+            padding: "20px 16px",
+            boxShadow:
+              "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+            border: "1px solid rgba(229, 231, 235, 0.8)",
+          }}
+        >
+          {/* Title */}
+          <h3
+            style={{
+              fontSize: "clamp(16px, 4vw, 20px)",
+              fontWeight: "800",
+              color: "#1F2937",
+              margin: "0 0 16px 0",
+              textAlign: "center",
+              lineHeight: "1.2",
+            }}
+          >
+            🎁 Bonos que recibirás por tu compra ✨
+          </h3>
+
+          {/* Bonus List */}
+          <div style={{ marginBottom: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
+              <span style={{ fontSize: "12px", marginTop: "2px" }}>🎁</span>
+              <span
+                style={{
+                  fontSize: "clamp(11px, 2.8vw, 13px)",
+                  color: "#374151",
+                  fontWeight: "600",
+                  lineHeight: "1.3",
+                }}
+              >
+                Kit de Retos de Lectura
               </span>
-              !
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
+              <span style={{ fontSize: "12px", marginTop: "2px" }}>🎁</span>
+              <span
+                style={{
+                  fontSize: "clamp(11px, 2.8vw, 13px)",
+                  color: "#374151",
+                  fontWeight: "600",
+                  lineHeight: "1.3",
+                }}
+              >
+                Dominando la Procrastinación
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
+              <span style={{ fontSize: "12px", marginTop: "2px" }}>🎁</span>
+              <span
+                style={{
+                  fontSize: "clamp(11px, 2.8vw, 13px)",
+                  color: "#374151",
+                  fontWeight: "600",
+                  lineHeight: "1.3",
+                }}
+              >
+                Gimnasia Ocular Intensiva
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
+              <span style={{ fontSize: "12px", marginTop: "2px" }}>🎁</span>
+              <span
+                style={{
+                  fontSize: "clamp(11px, 2.8vw, 13px)",
+                  color: "#374151",
+                  fontWeight: "600",
+                  lineHeight: "1.3",
+                }}
+              >
+                Videos de apoyo exclusivos
+              </span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+              }}
+            >
+              <span style={{ fontSize: "12px", marginTop: "2px" }}>🎁</span>
+              <span
+                style={{
+                  fontSize: "clamp(11px, 2.8vw, 13px)",
+                  color: "#374151",
+                  fontWeight: "600",
+                  lineHeight: "1.3",
+                }}
+              >
+                Hoja de cálculo de progreso SMART
+              </span>
+            </div>
+          </div>
+
+          {/* Lifetime Access Banner */}
+          <div
+            style={{
+              backgroundColor: "#1F2937",
+              borderRadius: "8px",
+              padding: "12px 16px",
+              marginBottom: "16px",
+              textAlign: "center",
+            }}
+          >
+            <h4
+              style={{
+                fontSize: "clamp(13px, 3.2vw, 16px)",
+                fontWeight: "800",
+                color: "white",
+                margin: "0 0 4px 0",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
+              ACCESO DE POR VIDA
+            </h4>
+            <p
+              style={{
+                fontSize: "clamp(11px, 2.8vw, 13px)",
+                color: "white",
+                margin: "0",
+                lineHeight: "1.3",
+              }}
+            >
+              ¡Haces un pago único de 9,99 USD y tienes{" "}
+              <span style={{ color: "#EF4444", fontWeight: "700" }}>
+                acceso al material de por vida!
+              </span>
             </p>
           </div>
 
+          {/* Guarantee Section */}
           <div
             style={{
-              background: "#000000",
-              color: "white",
-              padding: "16px",
-              borderRadius: "12px",
+              backgroundColor: "#F3F4F6",
+              borderRadius: "8px",
+              padding: "12px 16px",
               textAlign: "center",
-              marginBottom: "20px",
-              fontWeight: "700",
-              fontSize: "18px",
             }}
           >
-            GARANTÍA DE 7 DÍAS
-          </div>
-
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <h4
+              style={{
+                fontSize: "clamp(13px, 3.2vw, 16px)",
+                fontWeight: "800",
+                color: "#1F2937",
+                margin: "0 0 8px 0",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
+              GARANTÍA DE 7 DÍAS
+            </h4>
             <p
               style={{
-                fontSize: "14px",
+                fontSize: "clamp(10px, 2.5vw, 12px)",
                 color: "#6B7280",
-                margin: "0 0 12px 0",
-                lineHeight: "1.4",
+                margin: "0 0 8px 0",
+                lineHeight: "1.3",
+                fontWeight: "500",
               }}
             >
               Garantizamos el reembolso completo del importe pagado dentro de
@@ -3199,1032 +4203,719 @@ export default function Quiz() {
             </p>
             <p
               style={{
-                fontSize: "14px",
-                color: "#6B7280",
-                margin: 0,
-                lineHeight: "1.4",
-              }}
-            >
-              Si por cualquier motivo no estás satisfecho, puede solicitar su
-              garantía y le reembolsaremos su dinero sin resentimientos.
-            </p>
-          </div>
-
-          <div
-            style={{
-              background: "#EF4444",
-              color: "white",
-              padding: "16px",
-              borderRadius: "12px",
-              textAlign: "center",
-              marginBottom: "20px",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "16px",
-                fontWeight: "700",
-                marginBottom: "12px",
-              }}
-            >
-              OFERTA DISPONIBLE HASTA
-            </div>
-            <div
-              style={{ display: "flex", gap: "12px", justifyContent: "center" }}
-            >
-              <div
-                style={{
-                  background: "rgba(0,0,0,0.2)",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  minWidth: "60px",
-                }}
-              >
-                <div style={{ fontSize: "24px", fontWeight: "800" }}>
-                  {timeLeft ? Math.floor(timeLeft / 60) : 5}
-                </div>
-                <div style={{ fontSize: "12px" }}>Minutos</div>
-              </div>
-              <div
-                style={{
-                  background: "rgba(0,0,0,0.2)",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  minWidth: "60px",
-                }}
-              >
-                <div style={{ fontSize: "24px", fontWeight: "800" }}>
-                  {timeLeft ? timeLeft % 60 : 0}
-                </div>
-                <div style={{ fontSize: "12px" }}>Segundos</div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              background: "linear-gradient(135deg, #3B82F6, #1E40AF)",
-              color: "white",
-              padding: "16px",
-              borderRadius: "12px",
-              textAlign: "center",
-              marginBottom: "20px",
-              fontSize: "14px",
-              fontWeight: "600",
-            }}
-          >
-            CONDICIÓN ESPECIAL - DESCUENTO DE 47 USD
-          </div>
-
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1))",
-              border: "2px solid #10B981",
-              borderRadius: "16px",
-              padding: "20px",
-              marginBottom: "20px",
-              position: "relative",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: "-12px",
-                left: "20px",
-                background: "white",
-                padding: "4px 12px",
-                fontSize: "12px",
-                color: "#10B981",
-                fontWeight: "600",
-              }}
-            >
-              Antes 57 USD
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <div>
-                <h4
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "700",
-                    color: "#374151",
-                    margin: "0 0 4px 0",
-                  }}
-                >
-                  Método FocusRead
-                </h4>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    color: "#10B981",
-                    fontWeight: "600",
-                    margin: "0 0 8px 0",
-                  }}
-                >
-                  Ahora 9,99 USD
-                </p>
-                <p style={{ fontSize: "12px", color: "#6B7280", margin: 0 }}>
-                  Libro electrónico completo + 5 bonos
-                </p>
-                <p
-                  style={{
-                    fontSize: "12px",
-                    color: "#9CA3AF",
-                    margin: "4px 0 0 0",
-                  }}
-                >
-                  Disponible para pago a cuotas con tarjeta de crédito
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <button
-            onClick={() =>
-              (window.location.href =
-                "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1")
-            }
-            style={{
-              ...s.button,
-              background: "linear-gradient(135deg, #EF4444, #DC2626)",
-              fontSize: "clamp(16px, 4vw, 20px)",
-              fontWeight: "700",
-              padding: "18px 32px",
-              marginBottom: "16px",
-              boxShadow: "0 15px 35px -5px rgba(239, 68, 68, 0.4)",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "translateY(-3px)";
-              e.target.style.boxShadow =
-                "0 20px 40px -5px rgba(239, 68, 68, 0.5)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "translateY(0)";
-              e.target.style.boxShadow =
-                "0 15px 35px -5px rgba(239, 68, 68, 0.4)";
-            }}
-          >
-            Quiero garantizar mi acceso ahora
-          </button>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "12px",
-              marginBottom: "16px",
-              flexWrap: "wrap",
-            }}
-          >
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #FF5F00, #EB001B)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "10px",
-                fontWeight: "600",
-              }}
-            >
-              MC
-            </div>
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #1A1F71, #0066CC)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "10px",
-                fontWeight: "600",
-              }}
-            >
-              VISA
-            </div>
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #006FCF, #0048CC)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "8px",
-                fontWeight: "600",
-              }}
-            >
-              AMEX
-            </div>
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #D50000, #FF1744)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "8px",
-                fontWeight: "600",
-              }}
-            >
-              OXXO
-            </div>
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #00C853, #4CAF50)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "8px",
-                fontWeight: "600",
-              }}
-            >
-              PIX
-            </div>
-            <div
-              style={{
-                width: "40px",
-                height: "25px",
-                background: "linear-gradient(135deg, #1976D2, #42A5F5)",
-                borderRadius: "4px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "7px",
-                fontWeight: "600",
-              }}
-            >
-              PAYPAL
-            </div>
-          </div>
-
-          <div
-            style={{
-              textAlign: "center",
-              padding: "16px",
-              background: "rgba(255, 255, 255, 0.6)",
-              borderRadius: "12px",
-              backdropFilter: "blur(10px)",
-            }}
-          >
-            <p
-              style={{
-                fontSize: "12px",
-                color: "#10B981",
+                fontSize: "clamp(9px, 2.2vw, 11px)",
+                color: "#9CA3AF",
                 margin: "0",
-                fontWeight: "600",
+                lineHeight: "1.3",
+                fontStyle: "italic",
               }}
             >
-              🔒 Compra 100% segura
+              Si por cualquier motivo no obtienes resultados, puedes solicitar
+              tu garantía y te reembolsaremos tu dinero sin resentimientos.
             </p>
           </div>
-        </div>
-        {/* Sección Testimonios */}
-        <div
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
-            border: "1px solid rgba(79, 70, 229, 0.2)",
-            borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "clamp(18px, 5vw, 24px)",
-              fontWeight: "800",
-              textAlign: "center",
-              marginBottom: "32px",
-              color: "#1F2937",
-              lineHeight: "1.3",
-            }}
-          >
-            +7.000 estudiantes están multiplicando su velocidad de lectura y
-            aumentando su comprensión en este momento
-          </h3>
-
+          {/* Testimonials Section */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "20px",
-              width: "100%",
-              maxWidth: "100%",
+              marginTop: "8px",
+              marginBottom: "8px",
             }}
           >
-            {/* Testimonio 1 */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{ display: "flex", gap: "4px", marginBottom: "12px" }}
-              >
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} style={{ color: "#F59E0B", fontSize: "16px" }}>
-                    ⭐
-                  </span>
-                ))}
-              </div>
-              <h4
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  color: "#374151",
-                  margin: "0 0 8px 0",
-                }}
-              >
-                El primer día
-              </h4>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#10B981",
-                  margin: "0 0 12px 0",
-                  fontWeight: "600",
-                }}
-              >
-                Manuela Ramirez
-              </p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#6B7280",
-                  lineHeight: "1.5",
-                  margin: 0,
-                  fontStyle: "italic",
-                }}
-              >
-                Confieso que el primer día me hizo pensar en cuánta energía
-                desperdicio al usar la memoria auditiva y visual juntas, lo que
-                dificulta y me hace lento terminar de leer un libro, un artículo
-                o un noticiero. En la primera prueba, logré leer 181 palabras
-                por minuto. En la segunda, 260 palabras por minuto.
-              </p>
-            </div>
-
-            {/* Testimonio 2 */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{ display: "flex", gap: "4px", marginBottom: "12px" }}
-              >
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} style={{ color: "#F59E0B", fontSize: "16px" }}>
-                    ⭐
-                  </span>
-                ))}
-              </div>
-              <h4
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  color: "#374151",
-                  margin: "0 0 8px 0",
-                }}
-              >
-                Super efectivo!!!
-              </h4>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#10B981",
-                  margin: "0 0 12px 0",
-                  fontWeight: "600",
-                }}
-              >
-                Andres Orozco
-              </p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#6B7280",
-                  lineHeight: "1.5",
-                  margin: 0,
-                  fontStyle: "italic",
-                }}
-              >
-                Comencé a leer y me quedé dormido, con este método comenzé y no
-                sentí sueño, leí al mismo tiempo que antes, pero sin dormir,
-                incluso esto me impresionó.
-              </p>
-            </div>
-
-            {/* Testimonio 3 */}
-            <div
-              style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "16px",
-                padding: "20px",
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                style={{ display: "flex", gap: "4px", marginBottom: "12px" }}
-              >
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} style={{ color: "#F59E0B", fontSize: "16px" }}>
-                    ⭐
-                  </span>
-                ))}
-              </div>
-              <h4
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "700",
-                  color: "#374151",
-                  margin: "0 0 8px 0",
-                }}
-              >
-                Mi mejor compra
-              </h4>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#10B981",
-                  margin: "0 0 12px 0",
-                  fontWeight: "600",
-                }}
-              >
-                Camila Martinez
-              </p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#6B7280",
-                  lineHeight: "1.5",
-                  margin: 0,
-                  fontStyle: "italic",
-                }}
-              >
-                De 97 palabras por minuto a 191 palabras por minuto, con una
-                comprensión mucho mejor.
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* Sección Más opiniones */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: "24px",
-            }}
-          >
+            {/* Title */}
             <h3
               style={{
-                fontSize: "clamp(18px, 5vw, 24px)",
+                fontSize: "clamp(18px, 4.5vw, 24px)",
                 fontWeight: "800",
                 color: "#1F2937",
-                margin: 0,
+                margin: "0 0 20px 0",
                 textAlign: "center",
-              }}
-            >
-              Más opiniones de nuestros alumnos...{" "}
-              <span style={{ fontSize: "24px" }}>👇</span>
-            </h3>
-          </div>
-
-          <div
-            style={{
-              position: "relative",
-              maxWidth: "400px",
-              margin: "0 auto",
-              overflow: "hidden",
-              borderRadius: "16px",
-              boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                transition: "transform 0.5s ease",
-                transform: `translateX(-${(currentSlide || 0) * 100}%)`,
-              }}
-            >
-              {["test1.webp", "test2.webp", "test3.webp"].map(
-                (image, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      minWidth: "100%",
-                      height: "600px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "#f8f9fa",
-                    }}
-                  >
-                    <img
-                      src={`/images/${image}`}
-                      alt={`Testimonio ${index + 1}`}
-                      loading="lazy"
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        objectFit: "contain",
-                        borderRadius: "8px",
-                      }}
-                    />
-                  </div>
-                )
-              )}
-            </div>
-
-            {/* Botones de navegación */}
-            <button
-              onClick={() =>
-                setCurrentSlide((prev) =>
-                  (prev || 0) > 0 ? (prev || 0) - 1 : 2
-                )
-              }
-              style={{
-                position: "absolute",
-                left: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(0, 0, 0, 0.5)",
-                color: "white",
-                border: "none",
-                borderRadius: "50%",
-                width: "40px",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                fontSize: "18px",
-                fontWeight: "600",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "rgba(0, 0, 0, 0.7)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "rgba(0, 0, 0, 0.5)";
-              }}
-            >
-              ‹
-            </button>
-
-            <button
-              onClick={() => setCurrentSlide((prev) => ((prev || 0) + 1) % 3)}
-              style={{
-                position: "absolute",
-                right: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                background: "rgba(0, 0, 0, 0.5)",
-                color: "white",
-                border: "none",
-                borderRadius: "50%",
-                width: "40px",
-                height: "40px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                fontSize: "18px",
-                fontWeight: "600",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "rgba(0, 0, 0, 0.7)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "rgba(0, 0, 0, 0.5)";
-              }}
-            >
-              ›
-            </button>
-
-            {/* Indicadores */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: "16px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                display: "flex",
-                gap: "8px",
-              }}
-            >
-              {[0, 1, 2].map((index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  style={{
-                    width: "12px",
-                    height: "12px",
-                    borderRadius: "50%",
-                    border: "none",
-                    background:
-                      (currentSlide || 0) === index
-                        ? "#4F46E5"
-                        : "rgba(255, 255, 255, 0.5)",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        {/* Sección La vida antes y después */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          {/* La vida antes del método FocusRead */}
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1))",
-              borderRadius: "16px",
-              padding: "20px",
-              marginBottom: "24px",
-              border: "1px solid rgba(239, 68, 68, 0.2)",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "clamp(16px, 4vw, 20px)",
-                fontWeight: "700",
-                color: "#1F2937",
-                marginBottom: "20px",
-                textAlign: "center",
-              }}
-            >
-              La vida antes del método FocusRead
-            </h3>
-
-            <div style={{ display: "grid", gap: "12px" }}>
-              {[
-                "Te gusta leer, pero te sientes cansado y somnoliento cuando intentas leer un libro.",
-                "No te gusta leer, pero necesitas una solución efectiva para estudiar.",
-                "Lees, pero no puedes aprender ni recordar el contenido.",
-                "Lo leí varias veces y no pude entender el contenido.",
-                "Aumenta la acumulación de libros que nunca se leen.",
-                "Ese espacio en blanco durante un examen.",
-                "No se pudo revisar el contenido a tiempo antes del examen.",
-                "No puedes estudiar todo el contenido que necesitas en el tiempo",
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
-                    padding: "12px",
-                    background: "rgba(255, 255, 255, 0.7)",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(239, 68, 68, 0.1)",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#EF4444",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      marginTop: "2px",
-                      flexShrink: 0,
-                    }}
-                  >
-                    ✗
-                  </span>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#374151",
-                      margin: 0,
-                      lineHeight: "1.4",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* La vida después de usar el método FocusRead */}
-          <div
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1))",
-              borderRadius: "16px",
-              padding: "20px",
-              marginBottom: "24px",
-              border: "1px solid rgba(16, 185, 129, 0.2)",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "clamp(16px, 4vw, 20px)",
-                fontWeight: "700",
-                color: "#1F2937",
-                marginBottom: "20px",
-                textAlign: "center",
-              }}
-            >
-              La vida después de usar el método FocusRead
-            </h3>
-
-            <div style={{ display: "grid", gap: "12px" }}>
-              {[
-                "Podrás estudiar un gran volumen de contenidos en poco tiempo.",
-                "Podrás terminar de leer sin quedarte dormido ni dormitar.",
-                "Entiendes el contenido y aprendes más rápido.",
-                "Recuerdas el contenido fácilmente.",
-                "Puedes leer tantos libros como quieras.",
-                "Gastarás más dinero comprando más libros porque tu cartera de pedidos se habrá ido.",
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "12px",
-                    padding: "12px",
-                    background: "rgba(255, 255, 255, 0.7)",
-                    borderRadius: "12px",
-                    border: "1px solid rgba(16, 185, 129, 0.1)",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#10B981",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      marginTop: "2px",
-                      flexShrink: 0,
-                    }}
-                  >
-                    ✓
-                  </span>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#374151",
-                      margin: 0,
-                      lineHeight: "1.4",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {item}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Call to action final */}
-          <div
-            style={{
-              textAlign: "center",
-              padding: "20px",
-              background:
-                "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
-              borderRadius: "16px",
-              border: "1px solid rgba(79, 70, 229, 0.2)",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "clamp(20px, 5vw, 28px)",
-                fontWeight: "800",
-                color: "#1F2937",
-                marginBottom: "20px",
                 lineHeight: "1.2",
               }}
             >
-              Accede al Método FocusRead ahora
+              💬 Lo que dicen nuestros alumnos
             </h3>
 
-            <button
-              onClick={() =>
-                (window.location.href =
-                  "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1")
-              }
+            {/* Carousel Container */}
+            <div
               style={{
-                background: "linear-gradient(135deg, #EF4444, #DC2626)",
+                position: "relative",
+                overflow: "hidden",
+                borderRadius: "16px",
+                marginBottom: "2px",
+              }}
+            >
+              <div
+                className="carousel-track"
+                style={{
+                  display: "flex",
+                  animation: "slideCarousel 12s infinite linear",
+                }}
+              >
+                {/* Testimonial 1 */}
+                <div
+                  style={{
+                    minWidth: "100%",
+                    padding: "0 4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      boxShadow:
+                        "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+                      border: "1px solid rgba(229, 231, 235, 0.8)",
+                    }}
+                  >
+                    <img
+                      src="/images/test1.webp"
+                      alt="Testimonio 1"
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: "12px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Testimonial 2 */}
+                <div
+                  style={{
+                    minWidth: "100%",
+                    padding: "0 4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      boxShadow:
+                        "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+                      border: "1px solid rgba(229, 231, 235, 0.8)",
+                    }}
+                  >
+                    <img
+                      src="/images/test2.webp"
+                      alt="Testimonio 2"
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: "12px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Testimonial 3 */}
+                <div
+                  style={{
+                    minWidth: "100%",
+                    padding: "0 4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      boxShadow:
+                        "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+                      border: "1px solid rgba(229, 231, 235, 0.8)",
+                    }}
+                  >
+                    <img
+                      src="/images/test3.webp"
+                      alt="Testimonio 3"
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: "12px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Repeat for infinite scroll */}
+                <div
+                  style={{
+                    minWidth: "100%",
+                    padding: "0 4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      borderRadius: "16px",
+                      padding: "16px",
+                      boxShadow:
+                        "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+                      border: "1px solid rgba(229, 231, 235, 0.8)",
+                    }}
+                  >
+                    <img
+                      src="/images/test1.webp"
+                      alt="Testimonio 1"
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderRadius: "12px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Persuasive Statement */}
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "8px",
+                padding: "20px 16px",
+                background: "linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)",
+                borderRadius: "16px",
+                border: "2px solid rgba(16, 185, 129, 0.1)",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Decorative elements */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "20px",
+                  fontSize: "24px",
+                  opacity: "0.3",
+                }}
+              >
+                ⭐
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "10px",
+                  left: "20px",
+                  fontSize: "20px",
+                  opacity: "0.3",
+                }}
+              >
+                🚀
+              </div>
+
+              <p
+                style={{
+                  fontSize: "clamp(16px, 4vw, 20px)",
+                  fontWeight: "800",
+                  color: "#065F46",
+                  margin: "0 0 8px 0",
+                  lineHeight: "1.3",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                ¡Únete a más de 10,000 alumnos que ya transformaron su forma de
+                leer!
+              </p>
+              <p
+                style={{
+                  fontSize: "clamp(13px, 3.2vw, 16px)",
+                  color: "#047857",
+                  margin: "0",
+                  fontWeight: "600",
+                  lineHeight: "1.4",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                🎯 El 94% de nuestros estudiantes duplica su velocidad de
+                lectura en menos de 2 semanas
+              </p>
+            </div>
+
+            {/* Final CTA Button */}
+            <button
+              style={{
+                width: "100%",
+                padding: "18px 24px",
+                background:
+                  "linear-gradient(135deg, #DC2626 0%, #EF4444 50%, #F87171 100%)",
                 color: "white",
                 border: "none",
                 borderRadius: "16px",
-                padding: "18px 40px",
-                fontSize: "clamp(16px, 4vw, 20px)",
-                fontWeight: "700",
+                fontSize: "clamp(14px, 3.5vw, 18px)",
+                fontWeight: "900",
+                textAlign: "center",
                 cursor: "pointer",
+                boxShadow:
+                  "0 8px 25px -5px rgba(220, 38, 38, 0.5), 0 4px 6px -2px rgba(220, 38, 38, 0.2)",
                 transition: "all 0.3s ease",
-                boxShadow: "0 15px 35px -5px rgba(239, 68, 68, 0.4)",
-                marginBottom: "20px",
-                width: "100%",
-                maxWidth: "280px",
+                textTransform: "uppercase",
+                letterSpacing: "0.8px",
+                border: "2px solid rgba(185, 28, 28, 0.3)",
+                position: "relative",
+                overflow: "hidden",
+                animation: "buttonPulse 2s ease-in-out infinite",
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-3px)";
+                e.target.style.transform = "translateY(-2px) scale(1.02)";
                 e.target.style.boxShadow =
-                  "0 20px 40px -5px rgba(239, 68, 68, 0.5)";
+                  "0 12px 35px -8px rgba(220, 38, 38, 0.7), 0 6px 8px -3px rgba(220, 38, 38, 0.4)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = "translateY(0)";
+                e.target.style.transform = "translateY(0) scale(1)";
                 e.target.style.boxShadow =
-                  "0 15px 35px -5px rgba(239, 68, 68, 0.4)";
+                  "0 8px 25px -5px rgba(220, 38, 38, 0.5), 0 4px 6px -2px rgba(220, 38, 38, 0.2)";
+              }}
+              onTouchStart={(e) => {
+                e.target.style.transform = "translateY(-1px) scale(1.01)";
+              }}
+              onTouchEnd={(e) => {
+                e.target.style.transform = "translateY(0) scale(1)";
+              }}
+              onClick={() => {
+                window.location.href =
+                  "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1&return_screen=15";
               }}
             >
-              Accede al Método FocusRead
-            </button>
+              {/* Gradient overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  left: "0",
+                  right: "0",
+                  bottom: "0",
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)",
+                  borderRadius: "14px",
+                  pointerEvents: "none",
+                }}
+              />
 
-            <div
+              <span
+                style={{
+                  position: "relative",
+                  zIndex: 1,
+                  textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+                }}
+              >
+                🔥 ¡SÍ, QUIERO TRANSFORMAR MI LECTURA AHORA!
+              </span>
+            </button>
+          </div>
+        </div>
+        {/* Before and After Section */}
+        <div
+          style={{
+            marginTop: "8px",
+            marginBottom: "8px",
+            backgroundColor: "white",
+            borderRadius: "16px",
+            padding: "20px 16px",
+            boxShadow:
+              "0 4px 20px -5px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)",
+            border: "1px solid rgba(229, 231, 235, 0.8)",
+          }}
+        >
+          {/* Before Section */}
+          <div style={{ marginBottom: "24px" }}>
+            <h4
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "12px",
-                flexWrap: "wrap",
+                fontSize: "clamp(14px, 3.5vw, 18px)",
+                fontWeight: "800",
+                color: "#1F2937",
+                margin: "0 0 12px 0",
+                textAlign: "center",
+                lineHeight: "1.2",
               }}
             >
+              La vida antes del método FocusRead
+            </h4>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #FF5F00, #EB001B)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "10px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                MC
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#EF4444",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✗
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#374151",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Te gusta leer, pero te sientes cansado y somnoliento cuando
+                  intentas leer por horas.
+                </span>
               </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #1A1F71, #0066CC)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "10px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                VISA
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#EF4444",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✗
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#374151",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  No te gusta leer, pero necesitas una solución efectiva para
+                  estudiar mejor.
+                </span>
               </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #006FCF, #0048CC)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "8px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                AMEX
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#EF4444",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✗
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#374151",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Lees, pero no puedes aprender ni recordar el contenido.
+                </span>
               </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #D50000, #FF1744)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "8px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                OXXO
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#EF4444",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✗
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#374151",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Te sientes lento cuando intentas aplicar lo que has leído.
+                </span>
               </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #00C853, #4CAF50)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "8px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                PIX
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#EF4444",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✗
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#374151",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  No puedes estudiar todo el contenido que necesitas en el
+                  tiempo.
+                </span>
               </div>
+            </div>
+          </div>
+
+          {/* After Section */}
+          <div
+            style={{
+              backgroundColor: "#F0FDF4",
+              borderRadius: "12px",
+              padding: "16px",
+              border: "1px solid rgba(16, 185, 129, 0.2)",
+            }}
+          >
+            <h4
+              style={{
+                fontSize: "clamp(14px, 3.5vw, 18px)",
+                fontWeight: "800",
+                color: "#065F46",
+                margin: "0 0 12px 0",
+                textAlign: "center",
+                lineHeight: "1.2",
+              }}
+            >
+              La vida después de usar el método FocusRead
+            </h4>
+
+            <div style={{ marginBottom: "8px" }}>
               <div
                 style={{
-                  width: "40px",
-                  height: "25px",
-                  background: "linear-gradient(135deg, #1976D2, #42A5F5)",
-                  borderRadius: "4px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "7px",
-                  fontWeight: "600",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
                 }}
               >
-                PAYPAL
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#10B981",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✓
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#047857",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Puedes terminar un gran volumen de contenidos en poco tiempo.
+                </span>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#10B981",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✓
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#047857",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Puedes terminar libros de una manera más rápida.
+                </span>
+              </div>
+            </div>
+
+            <div style={{ marginBottom: "8px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#10B981",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✓
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#047857",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Puedes leer tantos libros como quieras.
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
+                  marginBottom: "6px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#10B981",
+                    marginTop: "2px",
+                  }}
+                >
+                  ✓
+                </span>
+                <span
+                  style={{
+                    fontSize: "clamp(11px, 2.8vw, 13px)",
+                    color: "#047857",
+                    fontWeight: "500",
+                    lineHeight: "1.3",
+                  }}
+                >
+                  Gastarás más dinero comprando más libros porque tu carrera de
+                  lector será exitosa.
+                </span>
               </div>
             </div>
           </div>
         </div>
-        {/* Sección Garantía */}
+        {/* Guarantee Section */}
         <div
           style={{
-            background: "rgba(255, 255, 255, 0.95)",
+            marginTop: "16px",
+            marginBottom: "16px",
+            backgroundColor: "white",
             borderRadius: "20px",
-            padding: "24px",
-            marginBottom: "24px",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            boxShadow: "0 8px 25px -5px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
-            textAlign: "center",
+            padding: "24px 16px",
+            boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.25)",
+            border: "1px solid rgba(229, 231, 235, 0.8)",
+            position: "relative",
+            overflow: "hidden",
           }}
         >
+          {/* Animated background shimmer */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: "-100%",
+              width: "100%",
+              height: "100%",
+              background:
+                "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)",
+              animation: "shimmer 3s infinite",
+            }}
+          />
+
+          {/* Floating decorative elements */}
+          <div
+            style={{
+              position: "absolute",
+              top: "15px",
+              right: "20px",
+              fontSize: "20px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite",
+            }}
+          >
+            💎
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "15px",
+              left: "15px",
+              fontSize: "18px",
+              opacity: "0.3",
+              animation: "float 3s ease-in-out infinite 1.5s",
+            }}
+          >
+            ⚡
+          </div>
+
           <h3
             style={{
               fontSize: "clamp(20px, 5vw, 28px)",
               fontWeight: "800",
-              color: "#1F2937",
-              marginBottom: "20px",
+              background: "linear-gradient(135deg, #ff6b6b, #ee5a24)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              marginBottom: "16px",
+              textAlign: "center",
               lineHeight: "1.2",
+              animation: "titlePulse 2s ease-in-out infinite alternate",
             }}
           >
             Garantía de devolución de dinero de 7 días
@@ -4232,173 +4923,442 @@ export default function Quiz() {
 
           <p
             style={{
-              fontSize: "clamp(14px, 4vw, 16px)",
-              color: "#6B7280",
-              marginBottom: "16px",
-              lineHeight: "1.5",
-              fontWeight: "500",
+              fontSize: "clamp(14px, 3.5vw, 18px)",
+              color: "#555",
+              lineHeight: "1.6",
+              marginBottom: "24px",
+              textAlign: "center",
+              fontWeight: "600",
             }}
           >
             Nuestro método está respaldado por una garantía de devolución del
             dinero del 100%.
           </p>
 
-          <p
-            style={{
-              fontSize: "clamp(14px, 4vw, 16px)",
-              color: "#6B7280",
-              marginBottom: "32px",
-              lineHeight: "1.5",
-              fontWeight: "500",
-              maxWidth: "600px",
-              margin: "0 auto 32px auto",
-            }}
-          >
-            Estamos tan seguros de que nuestro método le dará los resultados que
-            promete que le ofrecemos dentro de los 7 días posteriores a la
-            compra si no ve resultados visibles a pesar de seguir el método
-            según las instrucciones.
-          </p>
+          {/* Features list */}
+          <div style={{ marginBottom: "32px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "12px",
+                marginBottom: "12px",
+                animation: "slideInLeft 1s ease-out 0.2s both",
+              }}
+            >
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  background: "linear-gradient(135deg, #00b894, #00cec9)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "white",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  flexShrink: 0,
+                  marginTop: "2px",
+                }}
+              >
+                ✓
+              </div>
+              <span
+                style={{
+                  fontSize: "clamp(13px, 3.2vw, 16px)",
+                  color: "#374151",
+                  lineHeight: "1.4",
+                  fontWeight: "500",
+                }}
+              >
+                Estamos tan seguros de que nuestro método te ayudará que si
+                simplemente en cualquier momento de los 7 días no ves resultados
+              </span>
+            </div>
 
-          {/* Icono de Garantía */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "12px",
+                marginBottom: "24px",
+                animation: "slideInLeft 1s ease-out 0.4s both",
+              }}
+            >
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  background: "linear-gradient(135deg, #00b894, #00cec9)",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "white",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  flexShrink: 0,
+                  marginTop: "2px",
+                }}
+              >
+                ✓
+              </div>
+              <span
+                style={{
+                  fontSize: "clamp(13px, 3.2vw, 16px)",
+                  color: "#374151",
+                  lineHeight: "1.4",
+                  fontWeight: "500",
+                }}
+              >
+                te regresaremos integral el pesar de excluir el método actual
+                bajo las limitaciones
+              </span>
+            </div>
+          </div>
+
+          {/* Guarantee Badge */}
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: "24px",
+              marginBottom: "32px",
+              animation: "badgeFloat 3s ease-in-out infinite",
             }}
           >
             <div
               style={{
-                position: "relative",
                 width: "120px",
                 height: "120px",
+                position: "relative",
+                cursor: "pointer",
+                transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.1) rotate(5deg)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1) rotate(0deg)";
               }}
             >
-              {/* Badge principal */}
               <div
                 style={{
-                  width: "120px",
-                  height: "120px",
-                  background: "linear-gradient(135deg, #F59E0B, #D97706)",
+                  width: "100%",
+                  height: "100%",
                   borderRadius: "50%",
+                  background:
+                    "linear-gradient(45deg, #ff6b6b, #ee5a24, #feca57, #ff9ff3)",
+                  backgroundSize: "400% 400%",
+                  animation: "gradientShift 4s ease infinite",
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "white",
-                  fontWeight: "800",
-                  fontSize: "14px",
-                  textAlign: "center",
-                  boxShadow: "0 10px 25px -5px rgba(245, 158, 11, 0.4)",
-                  border: "4px solid white",
+                  boxShadow: "0 12px 30px rgba(238, 90, 36, 0.4)",
                   position: "relative",
-                  zIndex: 2,
                 }}
               >
-                <div style={{ fontSize: "12px", lineHeight: "1.1" }}>
-                  GARANTÍA
-                </div>
+                {/* Sparkle effects */}
                 <div
                   style={{
-                    fontSize: "24px",
+                    position: "absolute",
+                    top: "10%",
+                    left: "20%",
+                    width: "4px",
+                    height: "4px",
+                    background: "#feca57",
+                    borderRadius: "50%",
+                    animation: "sparkleFloat 2s ease-in-out infinite",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "20%",
+                    right: "15%",
+                    width: "4px",
+                    height: "4px",
+                    background: "#feca57",
+                    borderRadius: "50%",
+                    animation: "sparkleFloat 2s ease-in-out infinite 0.5s",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "25%",
+                    left: "10%",
+                    width: "4px",
+                    height: "4px",
+                    background: "#feca57",
+                    borderRadius: "50%",
+                    animation: "sparkleFloat 2s ease-in-out infinite 1s",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "15%",
+                    right: "25%",
+                    width: "4px",
+                    height: "4px",
+                    background: "#feca57",
+                    borderRadius: "50%",
+                    animation: "sparkleFloat 2s ease-in-out infinite 1.5s",
+                  }}
+                />
+
+                <div
+                  style={{
+                    width: "85%",
+                    height: "85%",
+                    background: "white",
+                    borderRadius: "50%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
                     fontWeight: "900",
-                    margin: "4px 0",
+                    color: "#ee5a24",
+                    boxShadow: "inset 0 3px 8px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  100%
+                  <div
+                    style={{
+                      fontSize: "clamp(24px, 6vw, 32px)",
+                      lineHeight: "1",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    100%
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "clamp(8px, 2vw, 10px)",
+                      textTransform: "uppercase",
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    Garantía
+                  </div>
                 </div>
-                <div style={{ fontSize: "10px", lineHeight: "1.1" }}>
-                  SATISFACCIÓN
-                </div>
-              </div>
-
-              {/* Ribbons/cintas */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-10px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  zIndex: 1,
-                }}
-              >
-                <div
-                  style={{
-                    width: "0",
-                    height: "0",
-                    borderLeft: "15px solid transparent",
-                    borderRight: "15px solid transparent",
-                    borderTop: "25px solid #DC2626",
-                    marginRight: "5px",
-                    display: "inline-block",
-                  }}
-                />
-                <div
-                  style={{
-                    width: "0",
-                    height: "0",
-                    borderLeft: "15px solid transparent",
-                    borderRight: "15px solid transparent",
-                    borderTop: "25px solid #EF4444",
-                    display: "inline-block",
-                  }}
-                />
               </div>
             </div>
           </div>
 
-          {/* Texto adicional */}
-          <div
+          {/* CTA Button */}
+          <button
             style={{
-              background:
-                "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1))",
-              border: "1px solid rgba(16, 185, 129, 0.2)",
-              borderRadius: "12px",
-              padding: "16px",
-              maxWidth: "500px",
+              width: "100%",
+              maxWidth: "400px",
               margin: "0 auto",
+              display: "block",
+              padding: "clamp(16px, 4vw, 20px) clamp(20px, 5vw, 32px)",
+              background:
+                "linear-gradient(135deg, #ff6b6b 0%, #ee5a24 50%, #ff4757 100%)",
+              color: "white",
+              border: "none",
+              borderRadius: "50px",
+              fontSize: "clamp(14px, 3.5vw, 18px)",
+              fontWeight: "700",
+              textAlign: "center",
+              cursor: "pointer",
+              boxShadow: "0 15px 40px rgba(255, 107, 107, 0.4)",
+              transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              position: "relative",
+              overflow: "hidden",
+              animation: "buttonPulse 2s ease-in-out infinite",
+              textTransform: "uppercase",
+              letterSpacing: "1px",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "translateY(-3px) scale(1.02)";
+              e.target.style.boxShadow = "0 20px 50px rgba(255, 107, 107, 0.6)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "translateY(0) scale(1)";
+              e.target.style.boxShadow = "0 15px 40px rgba(255, 107, 107, 0.4)";
+            }}
+            onClick={() => {
+              window.location.href =
+                "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1&return_screen=15";
             }}
           >
-            <p
+            {/* Button shimmer effect */}
+            <div
               style={{
-                fontSize: "14px",
-                color: "#065F46",
-                margin: 0,
-                fontWeight: "600",
-                lineHeight: "1.4",
+                position: "absolute",
+                top: 0,
+                left: "-100%",
+                width: "100%",
+                height: "100%",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)",
+                transition: "left 0.6s",
               }}
-            >
-              🛡️ Sin riesgo para ti. Si no estás satisfecho, te devolvemos el
-              100% de tu dinero.
-            </p>
-          </div>
+            />
+
+            <span style={{ position: "relative", zIndex: 1 }}>
+              🔓 Accede al Método FocusRead
+            </span>
+          </button>
+
+          {/* CSS para la animación pulse */}
+          <style jsx>{`
+            @keyframes buttonPulse {
+              0%,
+              100% {
+                transform: scale(1);
+                box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+              }
+              50% {
+                transform: scale(1.05);
+                box-shadow: 0 20px 50px rgba(255, 107, 107, 0.7);
+              }
+            }
+          `}</style>
         </div>
-        <style>
-          {`
-            @keyframes fillBar {
-              from {
-                transform: scaleX(0);
-              }
-              to {
-                transform: scaleX(1);
-              }
+
+        <style jsx>{`
+          @keyframes shimmer {
+            0% {
+              left: -100%;
             }
-            
-            .hover-button {
-              transition: transform 0.3s ease, box-shadow 0.3s ease;
+            100% {
+              left: 100%;
             }
-            
-            .hover-button:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.3);
+          }
+
+          @keyframes float {
+            0%,
+            100% {
+              transform: translateY(0px);
             }
-            
-            .hover-red:hover {
-              box-shadow: 0 20px 40px -5px rgba(239, 68, 68, 0.5);
+            50% {
+              transform: translateY(-8px);
             }
-          `}
-        </style>
+          }
+
+          @keyframes titlePulse {
+            from {
+              transform: scale(1);
+            }
+            to {
+              transform: scale(1.02);
+            }
+          }
+
+          @keyframes slideInLeft {
+            from {
+              opacity: 0;
+              transform: translateX(-20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+
+          @keyframes badgeFloat {
+            0%,
+            100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-8px);
+            }
+          }
+
+          @keyframes gradientShift {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+
+          @keyframes sparkleFloat {
+            0%,
+            100% {
+              transform: translateY(0px) scale(1);
+              opacity: 0.7;
+            }
+            50% {
+              transform: translateY(-10px) scale(1.2);
+              opacity: 1;
+            }
+          }
+
+          @keyframes buttonGlow {
+            from {
+              box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+            }
+            to {
+              box-shadow: 0 20px 50px rgba(255, 107, 107, 0.6);
+            }
+          }
+        `}</style>
+        <style>{`
+          @keyframes fillBar {
+            from { 
+              transform: scaleX(0);
+            }
+            to { 
+              transform: scaleX(1);
+            }
+          }
+          
+          @keyframes pulseGlow {
+            0%, 100% {
+              box-shadow: 0 8px 25px -5px rgba(220, 38, 38, 0.4), 0 4px 6px -2px rgba(220, 38, 38, 0.1);
+            }
+            50% {
+              box-shadow: 0 8px 25px -5px rgba(220, 38, 38, 0.6), 0 4px 6px -2px rgba(220, 38, 38, 0.2);
+            }
+          }
+          
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+          
+          @keyframes pulseText {
+            0%, 100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.02);
+            }
+          }
+          
+          @keyframes rotate {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          
+          @keyframes buttonPulse {
+            0%, 100% {
+              transform: scale(1);
+              box-shadow: 0 8px 25px -5px rgba(251, 191, 36, 0.5), 0 4px 6px -2px rgba(251, 191, 36, 0.2);
+            }
+            50% {
+              transform: scale(1.03);
+              box-shadow: 0 12px 35px -8px rgba(251, 191, 36, 0.8), 0 6px 8px -3px rgba(251, 191, 36, 0.4);
+            }
+          }
+        `}</style>
       </div>
     ),
   };
