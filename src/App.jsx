@@ -1485,10 +1485,9 @@ export default function Quiz() {
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
           padding: "12px",
           paddingTop: "16px",
-          paddingBottom: "16px",
+          paddingBottom: "20px",
           boxSizing: "border-box",
           overflow: "hidden",
         }}
@@ -1573,16 +1572,13 @@ export default function Quiz() {
         <div
           style={{
             position: "relative",
-            height: "clamp(80px, 18vh, 100px)",
-            marginBottom: "6px",
+            height: "clamp(70px, 15vh, 85px)",
+            marginBottom: "8px",
             background: "rgba(255, 255, 255, 0.9)",
             borderRadius: "10px",
             padding: "6px",
             backdropFilter: "blur(10px)",
             border: "1px solid rgba(79, 70, 229, 0.1)",
-            flex: 1,
-            minHeight: "80px",
-            maxHeight: "100px",
           }}
         >
           <svg
@@ -1824,7 +1820,7 @@ export default function Quiz() {
             fontSize: "clamp(10px, 2.6vw, 12px)",
             color: "#6B7280",
             textAlign: "center",
-            margin: "6px 0",
+            margin: "8px 0 16px 0",
             fontWeight: "500",
             lineHeight: "1.1",
             flexShrink: 0,
@@ -1834,7 +1830,7 @@ export default function Quiz() {
         </p>
 
         {/* Botón */}
-        <div style={{ flexShrink: 0, paddingTop: "8px" }}>
+        <div style={{ marginTop: "auto" }}>
           <button
             onClick={() => setStep(12)}
             style={{
