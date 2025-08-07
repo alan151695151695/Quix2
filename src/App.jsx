@@ -1479,24 +1479,25 @@ export default function Quiz() {
         )}
       </div>
     ),
+
     11: (
       <div
         style={{
           height: "100vh",
           display: "flex",
           flexDirection: "column",
-          padding: "12px",
-          paddingTop: "16px",
-          paddingBottom: "20px",
+          padding: "10px",
+          paddingTop: "12px",
+          paddingBottom: "12px",
           boxSizing: "border-box",
           overflow: "hidden",
         }}
       >
         {/* Título */}
-        <div style={{ marginBottom: "8px", flexShrink: 0 }}>
+        <div style={{ marginBottom: "6px" }}>
           <h2
             style={{
-              fontSize: "clamp(16px, 4vw, 20px)",
+              fontSize: "clamp(15px, 3.8vw, 18px)",
               fontWeight: "800",
               textAlign: "center",
               margin: "0",
@@ -1522,19 +1523,18 @@ export default function Quiz() {
             background:
               "linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05))",
             border: "1px solid rgba(79, 70, 229, 0.2)",
-            borderRadius: "10px",
-            padding: "12px",
+            borderRadius: "8px",
+            padding: "10px",
             marginBottom: "8px",
             backdropFilter: "blur(10px)",
             textAlign: "center",
-            flexShrink: 0,
           }}
         >
           <p
             style={{
-              fontSize: "clamp(12px, 3.2vw, 14px)",
+              fontSize: "clamp(11px, 3vw, 13px)",
               color: "#374151",
-              marginBottom: "4px",
+              marginBottom: "3px",
               fontWeight: "500",
               lineHeight: "1.2",
             }}
@@ -1553,7 +1553,7 @@ export default function Quiz() {
           </p>
           <p
             style={{
-              fontSize: "clamp(10px, 2.8vw, 12px)",
+              fontSize: "clamp(9px, 2.5vw, 11px)",
               color: "#6B7280",
               margin: 0,
               fontWeight: "500",
@@ -1568,15 +1568,15 @@ export default function Quiz() {
           </p>
         </div>
 
-        {/* Gráfico optimizado */}
+        {/* Gráfico compacto */}
         <div
           style={{
             position: "relative",
-            height: "clamp(70px, 15vh, 85px)",
-            marginBottom: "8px",
+            height: "60px",
+            marginBottom: "6px",
             background: "rgba(255, 255, 255, 0.9)",
-            borderRadius: "10px",
-            padding: "6px",
+            borderRadius: "8px",
+            padding: "4px",
             backdropFilter: "blur(10px)",
             border: "1px solid rgba(79, 70, 229, 0.1)",
           }}
@@ -1584,7 +1584,7 @@ export default function Quiz() {
           <svg
             width="100%"
             height="100%"
-            viewBox="0 0 320 90"
+            viewBox="0 0 320 60"
             style={{ overflow: "visible" }}
           >
             <defs>
@@ -1613,27 +1613,27 @@ export default function Quiz() {
             {/* Líneas de referencia */}
             <line
               x1="40"
-              y1="10"
+              y1="5"
               x2="40"
-              y2="70"
+              y2="45"
               stroke="rgba(107, 114, 128, 0.15)"
               strokeWidth="1"
               strokeDasharray="2,2"
             />
             <line
               x1="160"
-              y1="10"
+              y1="5"
               x2="160"
-              y2="70"
+              y2="45"
               stroke="rgba(107, 114, 128, 0.15)"
               strokeWidth="1"
               strokeDasharray="2,2"
             />
             <line
               x1="280"
-              y1="10"
+              y1="5"
               x2="280"
-              y2="70"
+              y2="45"
               stroke="rgba(107, 114, 128, 0.15)"
               strokeWidth="1"
               strokeDasharray="2,2"
@@ -1642,19 +1642,19 @@ export default function Quiz() {
             {/* Línea base */}
             <line
               x1="30"
-              y1="70"
+              y1="45"
               x2="290"
-              y2="70"
+              y2="45"
               stroke="rgba(107, 114, 128, 0.2)"
               strokeWidth="1"
             />
 
             {/* Curva principal */}
             <path
-              d="M 40 60 Q 120 50, 160 35 T 280 15"
+              d="M 40 40 Q 120 30, 160 20 T 280 8"
               fill="none"
               stroke="url(#curveGradient)"
-              strokeWidth="2.5"
+              strokeWidth="2"
               strokeLinecap="round"
               style={{
                 strokeDasharray: "300",
@@ -1663,150 +1663,65 @@ export default function Quiz() {
               }}
             />
 
-            {/* Punto "Tú hoy" */}
-            <g>
-              <circle
-                cx="40"
-                cy="60"
-                r="4"
-                fill="#10B981"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 0.3s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.4s ease-out 0.5s forwards",
-                }}
-              >
-                <rect
-                  x="18"
-                  y="45"
-                  width="44"
-                  height="14"
-                  rx="7"
-                  fill="#10B981"
-                />
-                <text
-                  x="40"
-                  y="54"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="8"
-                  fontWeight="600"
-                >
-                  Tú hoy
-                </text>
-              </g>
-            </g>
-
-            {/* Punto "Tú en 7 días" */}
-            <g>
-              <circle
-                cx="160"
-                cy="35"
-                r="4"
-                fill="#F59E0B"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 0.7s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.4s ease-out 0.9s forwards",
-                }}
-              >
-                <rect
-                  x="130"
-                  y="20"
-                  width="60"
-                  height="14"
-                  rx="7"
-                  fill="#F59E0B"
-                />
-                <text
-                  x="160"
-                  y="29"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="8"
-                  fontWeight="600"
-                >
-                  Tú en 7 días
-                </text>
-              </g>
-            </g>
-
-            {/* Punto "Tú en hasta 14 días" */}
-            <g>
-              <circle
-                cx="280"
-                cy="15"
-                r="4"
-                fill="#3B82F6"
-                style={{
-                  opacity: 0,
-                  animation: "fadeInPoint 0.3s ease-out 1.1s forwards",
-                }}
-              />
-              <g
-                style={{
-                  opacity: 0,
-                  animation: "bubbleIn 0.4s ease-out 1.3s forwards",
-                }}
-              >
-                <rect
-                  x="230"
-                  y="0"
-                  width="100"
-                  height="14"
-                  rx="7"
-                  fill="#3B82F6"
-                />
-                <text
-                  x="280"
-                  y="9"
-                  textAnchor="middle"
-                  fill="white"
-                  fontSize="8"
-                  fontWeight="600"
-                >
-                  Tú en hasta 14 días
-                </text>
-              </g>
-            </g>
+            {/* Puntos simplificados */}
+            <circle
+              cx="40"
+              cy="40"
+              r="3"
+              fill="#10B981"
+              style={{
+                opacity: 0,
+                animation: "fadeInPoint 0.3s ease-out 0.3s forwards",
+              }}
+            />
+            <circle
+              cx="160"
+              cy="20"
+              r="3"
+              fill="#F59E0B"
+              style={{
+                opacity: 0,
+                animation: "fadeInPoint 0.3s ease-out 0.7s forwards",
+              }}
+            />
+            <circle
+              cx="280"
+              cy="8"
+              r="3"
+              fill="#3B82F6"
+              style={{
+                opacity: 0,
+                animation: "fadeInPoint 0.3s ease-out 1.1s forwards",
+              }}
+            />
 
             {/* Etiquetas del eje X */}
             <text
               x="40"
-              y="82"
+              y="55"
               textAnchor="middle"
               fill="#6B7280"
-              fontSize="9"
+              fontSize="8"
               fontWeight="500"
             >
               Poco
             </text>
             <text
               x="160"
-              y="82"
+              y="55"
               textAnchor="middle"
               fill="#6B7280"
-              fontSize="9"
+              fontSize="8"
               fontWeight="500"
             >
               Medio
             </text>
             <text
               x="280"
-              y="82"
+              y="55"
               textAnchor="middle"
               fill="#6B7280"
-              fontSize="9"
+              fontSize="8"
               fontWeight="500"
             >
               Mucho
@@ -1814,16 +1729,58 @@ export default function Quiz() {
           </svg>
         </div>
 
+        {/* Etiquetas de progreso */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "8px",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "clamp(8px, 2.2vw, 10px)",
+              color: "#10B981",
+              fontWeight: "600",
+              textAlign: "center",
+            }}
+          >
+            Tú hoy
+          </span>
+          <span
+            style={{
+              fontSize: "clamp(8px, 2.2vw, 10px)",
+              color: "#F59E0B",
+              fontWeight: "600",
+              textAlign: "center",
+            }}
+          >
+            7 días
+          </span>
+          <span
+            style={{
+              fontSize: "clamp(8px, 2.2vw, 10px)",
+              color: "#3B82F6",
+              fontWeight: "600",
+              textAlign: "center",
+            }}
+          >
+            14 días
+          </span>
+        </div>
+
         {/* Texto de promedio */}
         <p
           style={{
-            fontSize: "clamp(10px, 2.6vw, 12px)",
+            fontSize: "clamp(9px, 2.4vw, 11px)",
             color: "#6B7280",
             textAlign: "center",
-            margin: "8px 0 16px 0",
+            margin: "8px 0 12px 0",
             fontWeight: "500",
             lineHeight: "1.1",
-            flexShrink: 0,
           }}
         >
           Promedio: Por debajo del promedio - Lectura básica
@@ -1834,28 +1791,27 @@ export default function Quiz() {
           <button
             onClick={() => setStep(12)}
             style={{
-              ...s.button,
               fontSize: "clamp(13px, 3.5vw, 15px)",
               fontWeight: "600",
               width: "100%",
               padding: "12px 20px",
-              borderRadius: "10px",
+              borderRadius: "8px",
               border: "none",
               background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
               color: "white",
               cursor: "pointer",
               transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              boxShadow: "0 6px 16px -4px rgba(102, 126, 234, 0.4)",
+              boxShadow: "0 4px 12px -2px rgba(102, 126, 234, 0.4)",
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = "translateY(-1px)";
               e.target.style.boxShadow =
-                "0 8px 20px -4px rgba(102, 126, 234, 0.5)";
+                "0 6px 16px -2px rgba(102, 126, 234, 0.5)";
             }}
             onMouseLeave={(e) => {
               e.target.style.transform = "translateY(0)";
               e.target.style.boxShadow =
-                "0 6px 16px -4px rgba(102, 126, 234, 0.4)";
+                "0 4px 12px -2px rgba(102, 126, 234, 0.4)";
             }}
           >
             Continuar
@@ -1864,32 +1820,18 @@ export default function Quiz() {
 
         <style>
           {`
-            @keyframes drawCurve {
-              to {
-                stroke-dashoffset: 0;
-              }
-            }
-            
-            @keyframes fadeInPoint {
-              to {
-                opacity: 1;
-              }
-            }
-            
-            @keyframes bubbleIn {
-              0% {
-                opacity: 0;
-                transform: scale(0.5);
-              }
-              70% {
-                transform: scale(1.05);
-              }
-              100% {
-                opacity: 1;
-                transform: scale(1);
-              }
-            }
-          `}
+        @keyframes drawCurve {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        
+        @keyframes fadeInPoint {
+          to {
+            opacity: 1;
+          }
+        }
+      `}
         </style>
       </div>
     ),
