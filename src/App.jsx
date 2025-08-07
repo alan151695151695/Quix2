@@ -3000,13 +3000,15 @@ export default function Quiz() {
               e.target.style.transform = "translateY(0)";
             }}
             onClick={() => {
-              // Guardar estado actual antes de ir a Hotmart
-              sessionStorage.setItem("returnToScreen", "15");
-              sessionStorage.setItem("userReturnedFromPayment", "true");
-
-              // Ir a Hotmart con el nuevo link
-              window.location.href =
-                "https://pay.hotmart.com/D101097522U?checkoutMode=10&src=lp1&return_screen=15";
+              const targetSection = document.getElementById(
+                "access-today-section"
+              );
+              if (targetSection) {
+                targetSection.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
             }}
           >
             <div
@@ -3199,6 +3201,7 @@ export default function Quiz() {
         </div>
         {/* What You'll Receive Section */}
         <div
+          id="access-today-section"
           style={{
             marginTop: "24px",
             marginBottom: "32px",
@@ -3354,7 +3357,8 @@ export default function Quiz() {
                   }}
                 >
                   Entrenamiento visual para multiplicar tu velocidad de lectura
-                  en 14 días. Tu mente reconocerá ideas antes de leerlas.
+                  en 14 días. Tu mente reconocerá ideas antes de leerlas. Ebook
+                  + VideoClases
                 </p>
               </div>
 
@@ -4974,6 +4978,7 @@ export default function Quiz() {
               >
                 Estamos tan seguros de que nuestro método te ayudará que si
                 simplemente en cualquier momento de los 7 días no ves resultados
+                te regresamos tu dinero
               </span>
             </div>
 
@@ -5012,8 +5017,7 @@ export default function Quiz() {
                   fontWeight: "500",
                 }}
               >
-                te regresaremos integral el pesar de excluir el método actual
-                bajo las limitaciones
+                Reembolso gantizado sin preguntas, solo con 2 clics
               </span>
             </div>
           </div>
